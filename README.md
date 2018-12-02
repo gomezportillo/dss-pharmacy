@@ -1,1 +1,1 @@
-# dss-pharmacy
+# Pharmacy managing project
