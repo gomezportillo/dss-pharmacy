@@ -10,6 +10,7 @@ from model.daoproduct import DAOProduct
 from model.user import User
 from model.daouser import DAOUser
 
+VERSION = 0.1
 # App definition
 app = Flask(__name__)
 
@@ -25,6 +26,21 @@ html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website')
 @app.route('/', methods=['GET'])
 def index():
     return send_from_directory(html_dir, 'index.html')
+
+@app.route('/status', methods=['GET'])
+def status():
+    authors = {}
+    authors['server'] = '@gomezportillo'
+    authors['mobile-app'] = '@xenahort'
+
+    data = {}
+    data['status'] = 'OK'
+    data['version'] = VERSION
+    data['authors'] = authors
+
+    resp = jsonify(data)
+    resp.status_code = 200
+    return resp
 
 @app.errorhandler(404)
 def not_found(error=None):
