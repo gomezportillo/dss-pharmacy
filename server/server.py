@@ -28,7 +28,7 @@ html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website')
 def index():
     return send_from_directory(html_dir, 'index.html')
 
-@app.route('/status', methods=['GET'])
+@app.route('/rest/status', methods=['GET'])
 def status():
     authors = {}
     authors['server'] = '@gomezportillo'
