@@ -64,5 +64,42 @@
     </div>
   </div>
 
+  <script>
+  $( document ).ready(function()
+  {
+    load_pharmacies_coordinates();
+  });
+
+  var debug = true;
+  if ( debug )
+  {
+    var SERVER_REST_URL = "http://localhost:5000/rest/pharmacies";
+  }
+  else
+  {
+    var SERVER_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/pharmacies";
+  }
+  function load_pharmacies_coordinates()
+  {
+    $.ajax({
+      url: SERVER_REST_URL + '/all',
+      type: 'GET',
+      dataType: 'json',
+      success: function (pharmacies)
+      {
+        console.log(pharmacies);
+        $.each(pharmacies, function (key, value)
+        {
+          coord_tmp = {lat: value.latitude, lng: value.longitude}
+          var marker = new google.maps.Marker({position: coord_tmp, map: map, title: key});
+        });
+      },
+      error: function (request, message, error)
+      {
+        console.log("Error performing GET on " + SERVER_REST_URL);
+      }
+    });
+  }
+  </script>
 </body>
 </html>
