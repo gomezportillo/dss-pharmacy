@@ -28,9 +28,8 @@ class DAOProduct:
     def readAll(self):
         return self.products
 
-
-    def delete(self, product):
-        pass
+    def delete(self, key):
+        self.products.pop(key)
 
     def deleteAll(self):
         pass

@@ -64,10 +64,10 @@ def status():
     resp.status_code = 200
     return resp
 
-@app.route('/rest/<string:resource_name>/all', methods=['GET'])
-def get_resource(resource_name):
-    if resource_name in daos:
-        result = daos[resource_name].readAll()
+@app.route('/rest/<string:resource>/all', methods=['GET'])
+def GET_ALL_resources(resource):
+    if resource in daos:
+        result = daos[resource].readAll()
         resp = jsonify(result)
         resp.status_code = 200
         return resp
@@ -75,15 +75,22 @@ def get_resource(resource_name):
         abort(404)
 
 @app.route('/rest/products', methods=['POST'])
-def post_product():
-    params = request.form.to_dict()
-    product = Product(params['name'], params['description'], params['price'])
+def POST_product():
+    product = Product(request.form.to_dict())
+    print(product)
     daos['products'].insert(product)
-    
+
     resp = jsonify({'status':'201'})
     resp.status_code = 201
     return resp
 
+@app.route('/rest/products', methods=['DELETE'])
+def DELETE_product():
+    name = request.form.to_dict()['name']
+    daos['products'].delete(name)
+    resp = jsonify({'status':'201'})
+    resp.status_code = 201
+    return resp
 
 @app.errorhandler(404)
 def not_found(error=None):

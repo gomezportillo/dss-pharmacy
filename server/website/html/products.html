@@ -62,6 +62,7 @@
               <th>Name</th>
               <th>Description</th>
               <th>Price (€)</th>
+              <th>Delete</th>
             </thead>
             <tbody>
               <!--Products will be here-->
@@ -91,10 +92,7 @@
             </div>
           </form>
         </div>
-
       </div>
-
-
     </div>
   </div>
 </div>
@@ -119,6 +117,7 @@ else
 // REF. https://api.jquery.com/jquery.get/
 function GET_products()
 {
+  var button = '<button id="delete-product" class="btn btn-default col-md-3" type="button"><span class="glyphicon glyphicon-trash"></span></button>'
   $.ajax({
     url: SERVER_REST_URL + '/all',
     type: 'GET',
@@ -129,6 +128,8 @@ function GET_products()
         var new_row = '<tr><td>' + key + '</td>'+
         '<td>'+ value.description + '</td>'+
         '<td>'+ value.price + '</td>' +
+
+        '<td><button class="btn btn-default col-md-3 delete-product-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
         '</tr>';
         jQuery("#table-products > tbody:last-child").append(new_row);
       });
@@ -147,8 +148,8 @@ $(function POST_products()
     $.ajax({
       url: SERVER_REST_URL,
       type: 'POST',
-      data:$('#add-product-form').serialize(),
-      success: function (products)
+      data: $('#add-product-form').serialize(),
+      success: function ()
       {
         location.reload();
       },
@@ -160,6 +161,24 @@ $(function POST_products()
     return false;
   });
 })
+
+$(document).on('click', '.delete-product-btn', function ()
+{
+  $.ajax({
+    url: SERVER_REST_URL,
+    type: 'DELETE',
+    data: {'name':$(this).attr('id')},
+    success: function ()
+    {
+      location.reload();
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing DELETE on " + SERVER_REST_URL);
+    }
+  });
+});
+
 </script>
 
 
