@@ -17,11 +17,39 @@ The server will return JSON messages. All models will work under the _(URL)/rest
 * **/rest/status** will return the status of the server following structure.
 
 ```
-{"authors":{"mobile-app":"@xenahort","server":"@gomezportillo"},"status":"OK","version":0.1}
+{  
+   "authors":
+   {  
+      "mobile-app":"@xenahort",
+      "server":"@gomezportillo"
+   },
+   "status":"OK",
+   "version":0.1
+}
 ```
 
-* **/rest/pharmacies** will return the list of registered pharmacies with the following structure.
+* **/rest/pharmacies/all** will return the list of registered pharmacies with the following structure.
 
 ```
-{"Farmacia 1":{"latitude":37.198366,"longitude":-3.624976},"Farmacia 2":{"latitude":37.195993,"longitude":-3.622784}}
+{  
+   "Farmacia 1":
+   {  
+      "latitude":37.198366,
+      "longitude":-3.624976
+   },
+   "Farmacia 2":
+   {  
+      "latitude":37.195993,
+      "longitude":-3.622784
+   }
+}
+```
+
+* **/rest/users/all** will return the list of registered users with the following structure.
+
+```
+{  
+   "gomezportillo@ugr.es":"Pedro Manuel Gomez-Portillo",
+   "xenahort@ugr.es":"Juan Carlos Serrano"
+}
 ```

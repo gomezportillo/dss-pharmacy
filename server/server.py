@@ -6,13 +6,22 @@ from flask import jsonify
 
 import pymongo
 
-from model.product import Product
-from model.daoproduct import DAOProduct
-from model.user import User
 from model.daouser import DAOUser
 from model.daopharmacy import DAOPharmacy
+from model.daoproduct import DAOProduct
+from model.daoorder import DAOOrder
 
-VERSION = 0.1
+from model.order import Order
+from model.pharmacy import Pharmacy
+from model.product import Product
+from model.user import User
+
+# Metadata
+VERSION = 0.2
+authors = {}
+authors['server'] = '@gomezportillo'
+authors['mobile-app'] = '@xenahort'
+
 # App definition
 app = Flask(__name__)
 
@@ -20,9 +29,10 @@ app = Flask(__name__)
 MONGODB_URI = 'mongodb://user:user123@ds123584.mlab.com:23584/pharmacy'
 
 # DAOs
-# daoproduct = DAOProduct(MONGODB_URI)
-# daouser = DAOUser(MONGODB_URI)
-daophar = DAOPharmacy(MONGODB_URI)
+daoproduct = DAOProduct(MONGODB_URI)
+daouser    = DAOUser(MONGODB_URI)
+daopharm   = DAOPharmacy(MONGODB_URI)
+daoorder   = DAOOrder(MONGODB_URI)
 
 html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website')
 
@@ -32,10 +42,6 @@ def index():
 
 @app.route('/rest/status', methods=['GET'])
 def status():
-    authors = {}
-    authors['server'] = '@gomezportillo'
-    authors['mobile-app'] = '@xenahort'
-
     data = {}
     data['status'] = 'OK'
     data['version'] = VERSION
@@ -45,10 +51,17 @@ def status():
     resp.status_code = 200
     return resp
 
-@app.route('/rest/pharmacies', methods=['GET'])
+@app.route('/rest/pharmacies/all', methods=['GET'])
 def get_pharmacies():
-    pharmacies = daophar.readAll()
+    pharmacies = daopharm.readAll()
     resp = jsonify(pharmacies)
+    resp.status_code = 200
+    return resp
+
+@app.route('/rest/users/all', methods=['GET'])
+def get_users():
+    users = daouser.readAll()
+    resp = jsonify(users)
     resp.status_code = 200
     return resp
 

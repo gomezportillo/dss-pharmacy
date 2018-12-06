@@ -2,7 +2,7 @@ import pymongo
 
 from model import product
 
-PRIMARY_KEY = 'id'
+PRIMARY_KEY = 'name'
 COLLECTION_NAME = 'products'
 
 class DAOProduct:
@@ -11,6 +11,7 @@ class DAOProduct:
         self.mongo_client = pymongo.MongoClient(MONGODB_URI)
         self.apolo_ddbb = self.mongo_client.get_database()
         self.collection = self.apolo_ddbb[COLLECTION_NAME]
+        self.set_up_ddbb()
 
     def insert(self, product):
         pass
@@ -18,13 +19,13 @@ class DAOProduct:
     def update(self, product):
         pass
 
-    def readAll(self, product):
+    def readAll(self):
         pass
 
     def delete(self, product):
         pass
 
-    def deleteAll(self, product):
+    def deleteAll(self):
         pass
 
     def find(self, product):

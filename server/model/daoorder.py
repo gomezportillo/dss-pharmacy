@@ -1,11 +1,11 @@
 import pymongo
 
-from model import pharmacy
+from model import order
 
-PRIMARY_KEY = 'name'
-COLLECTION_NAME = 'pharmacies'
+PRIMARY_KEY = 'id'
+COLLECTION_NAME = 'orders'
 
-class DAOPharmacy:
+class DAOOrder:
 
     def __init__(self, MONGODB_URI):
         self.mongo_client = pymongo.MongoClient(MONGODB_URI)
@@ -20,15 +20,12 @@ class DAOPharmacy:
         pass
 
     def readAll(self):
-        pharms = {}
-        pharms['Farmacia 1'] = {'latitude': 37.198366, 'longitude': -3.624976}
-        pharms['Farmacia 2'] = {'latitude': 37.195993, 'longitude': -3.622784}
-        return pharms
+        pass
 
     def delete(self, product):
         pass
 
-    def deleteAll(self, product):
+    def deleteAll(self):
         pass
 
     def find(self, product):
