@@ -4,6 +4,7 @@ from flask import Flask
 from flask import send_from_directory
 from flask import jsonify
 from flask import request
+from flask import abort
 
 import pymongo
 
@@ -30,10 +31,11 @@ app = Flask(__name__)
 MONGODB_URI = 'mongodb://user:user123@ds123584.mlab.com:23584/pharmacy'
 
 # DAOs
-daoproduct = DAOProduct(MONGODB_URI)
-daouser    = DAOUser(MONGODB_URI)
-daopharm   = DAOPharmacy(MONGODB_URI)
-daoorder   = DAOOrder(MONGODB_URI)
+daos = {}
+daos['products']   = DAOProduct(MONGODB_URI)
+daos['users']      = DAOUser(MONGODB_URI)
+daos['pharmacies'] = DAOPharmacy(MONGODB_URI)
+daos['orders']     = DAOOrder(MONGODB_URI)
 
 html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'html')
 css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')
@@ -62,26 +64,15 @@ def status():
     resp.status_code = 200
     return resp
 
-@app.route('/rest/pharmacies/all', methods=['GET'])
-def get_pharmacies():
-    pharmacies = daopharm.readAll()
-    resp = jsonify(pharmacies)
-    resp.status_code = 200
-    return resp
-
-@app.route('/rest/users/all', methods=['GET'])
-def get_users():
-    users = daouser.readAll()
-    resp = jsonify(users)
-    resp.status_code = 200
-    return resp
-
-@app.route('/rest/products/all', methods=['GET'])
-def get_products():
-    users = daoproduct.readAll()
-    resp = jsonify(users)
-    resp.status_code = 200
-    return resp
+@app.route('/rest/<string:resource_name>/all', methods=['GET'])
+def get_resource(resource_name):
+    if resource_name in daos:
+        result = daos[resource_name].readAll()
+        resp = jsonify(result)
+        resp.status_code = 200
+        return resp
+    else:
+        abort(404)
 
 @app.route('/rest/products', methods=['POST'])
 def post_product():
