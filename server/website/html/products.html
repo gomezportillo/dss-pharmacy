@@ -40,22 +40,45 @@
   <div class="container">
     <br><br><br><br>
     <h1>Products</h1>
+
     <hr>
 
     <div class="col-md-12">
-      <table class="table table-hover" id="table-products">
-        <thead>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Price (€)</th>
-        </thead>
-        <tbody>
-          <!--Products will be here-->
-        </tbody>
-      </table>
-    </div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#see-products-tab">
+          <span class="glyphicon glyphicon-list-alt"></span> See products</a>
+        </li>
 
+        <li><a data-toggle="tab" href="#add-products-tab">
+          <span class="glyphicon glyphicon-plus"></span> Add products</a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <br>
+        <div id="see-products-tab" class="tab-pane fade in active">
+          <table class="table table-hover" id="table-products">
+            <thead>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Price (€)</th>
+            </thead>
+            <tbody>
+              <!--Products will be here-->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="add-products-tab" class="tab-pane fade">
+          <p>Hola</p>
+        </div>
+
+      </div>
+
+
+    </div>
   </div>
+</div>
 </body>
 
 <script type="text/javascript">
@@ -85,9 +108,9 @@ function GET_products()
     {
       $.each(products, function (key, value) {
         var new_row = '<tr><td>' + key + '</td>'+
-                      '<td>'+ value.description + '</td>'+
-                      '<td>'+ value.price + '</td>' +
-                      '</tr>';
+        '<td>'+ value.description + '</td>'+
+        '<td>'+ value.price + '</td>' +
+        '</tr>';
         jQuery("#table-products > tbody:last-child").append(new_row);
       });
     },
