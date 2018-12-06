@@ -37,24 +37,30 @@ daos['users']      = DAOUser(MONGODB_URI)
 daos['pharmacies'] = DAOPharmacy(MONGODB_URI)
 daos['orders']     = DAOOrder(MONGODB_URI)
 
+# Constructors
+constructors = {}
+constructors['products']   = Product
+constructors['users']      = User
+constructors['pharmacies'] = Pharmacy
+constructors['orders']     = Order
+
 html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'html')
 css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')
-
-@app.route('/', methods=['GET'])
-def index():
-    return send_from_directory(html_dir, 'index.html')
-
-@app.route('/products', methods=['GET'])
-def products():
-    return send_from_directory(html_dir, 'products.html')
-
 
 @app.route('/css/main.css', methods=['GET'])
 def get_css():
     return send_from_directory(css_dir, 'main.css')
 
+@app.route('/', methods=['GET'])
+def get_html_index():
+    return send_from_directory(html_dir, 'index.html')
+
+@app.route('/products', methods=['GET'])
+def get_html_products():
+    return send_from_directory(html_dir, 'products.html')
+
 @app.route('/rest/status', methods=['GET'])
-def status():
+def get_status():
     data = {}
     data['status'] = 'OK'
     data['version'] = VERSION
@@ -74,15 +80,16 @@ def GET_ALL_resources(resource):
     else:
         abort(404)
 
-@app.route('/rest/products', methods=['POST'])
-def POST_product():
-    product = Product(request.form.to_dict())
-    print(product)
-    daos['products'].insert(product)
-
-    resp = jsonify({'status':'201'})
-    resp.status_code = 201
-    return resp
+@app.route('/rest/<string:resource>', methods=['POST'])
+def POST_resource(resource):
+    if resource in daos and resource in constructors:
+        product = constructors[resource](request.form.to_dict())
+        daos[resource].insert(product)
+        resp = jsonify({'status':'201'})
+        resp.status_code = 201
+        return resp
+    else:
+        abort(404)
 
 @app.route('/rest/products', methods=['DELETE'])
 def DELETE_product():
