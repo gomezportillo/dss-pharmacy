@@ -16,6 +16,9 @@
   <script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+  <!-- Google Maps API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBl7Lhhxg4UBj19zByED6drVMgsh59fhw&callback=initMap"></script>
+
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -46,8 +49,20 @@
     <div class="container">
       <br><br><br><br>
       <h1>Pharmacies</h1>
-
+      <hr>
+      <div class="col-md-12" id="map">
+        <script>
+        function initMap()
+        {
+          // REF. https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+          var center = {lat: 37.197361, lng: -3.623561};
+          // Center map
+          map = new google.maps.Map(document.getElementById('map'), {zoom: 17, center: center});
+        }
+        </script>
+      </div>
     </div>
   </div>
+
 </body>
 </html>

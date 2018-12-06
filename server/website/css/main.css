@@ -32,3 +32,9 @@
   font-size: 40px;
   color: #666;
 }
+
+#map
+{
+  height: 500px;
+  background-color: grey;
+}
