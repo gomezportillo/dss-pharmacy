@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask import send_from_directory
 from flask import jsonify
+from flask import request
 
 import pymongo
 
@@ -70,14 +71,22 @@ def get_users():
     resp.status_code = 200
     return resp
 
+@app.route('/bad', methods=['DELETE'])
+def safsad():
+    pass
+
 @app.errorhandler(404)
 def not_found(error=None):
     return send_from_directory(html_dir, '404.html')
 
 @app.errorhandler(405)
 def not_allowed(error=None):
-    return send_from_directory(html_dir, '405.html')
-
+    data = {}
+    data['status'] = '405'
+    data['message'] = 'URL {} not allowed from {} HTTP method'.format(request.url, request.method)
+    resp = jsonify(data)
+    resp.status_code = 405
+    return resp
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
