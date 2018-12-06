@@ -34,11 +34,16 @@ daouser    = DAOUser(MONGODB_URI)
 daopharm   = DAOPharmacy(MONGODB_URI)
 daoorder   = DAOOrder(MONGODB_URI)
 
-html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website')
+html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'html')
+css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')
 
 @app.route('/', methods=['GET'])
 def index():
     return send_from_directory(html_dir, 'index.html')
+
+@app.route('/css/main.css', methods=['GET'])
+def get_css():
+    return send_from_directory(css_dir, 'main.css')
 
 @app.route('/rest/status', methods=['GET'])
 def status():

@@ -1,0 +1,21 @@
+.navbar, .navbar-brand
+{
+  background-image: none !important;
+  font-size: 135%;
+  height: 60px;
+}
+
+.navbar-nav a
+{
+  font-size: 110%;
+  position: relative;
+  top: 8px;
+}
+
+.divider-vertical
+{
+  height: 60px;
+  margin: 0 10px;
+  border-left: 1px solid  #eee;
+  border-right: 1px solid #eee;
+}

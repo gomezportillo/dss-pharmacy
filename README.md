@@ -6,7 +6,7 @@ This repository corresponds to the server of the project.
 
 The server is automatically deployed in the following URL after each commit.
 
-https://dss-pharmacy.herokuapp.com/status
+https://dss-pharmacy.herokuapp.com/
 
 ## Documentation
 
