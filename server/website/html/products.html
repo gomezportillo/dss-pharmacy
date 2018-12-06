@@ -70,7 +70,26 @@
         </div>
 
         <div id="add-products-tab" class="tab-pane fade">
-          <p>Hola</p>
+          <form id="add-product-form">
+            <div class="form-group">
+              <label for="id">Name</label>
+              <input name="name" type="text" class="form-control" placeholder="Enter name" />
+            </div>
+
+            <div class="form-group">
+              <label for="id">Description</label>
+              <input name="description" type="text" class="form-control" placeholder="Enter description" />
+            </div>
+
+            <div class="form-group">
+              <label for="id">Price (€)</label>
+              <input name="price" type="number" class="form-control" placeholder="Enter price" />
+            </div>
+
+            <div class="form-group">
+              <input value="Add product" type="submit" class="btn btn-primary" />
+            </div>
+          </form>
         </div>
 
       </div>
@@ -87,21 +106,21 @@ $( document ).ready(function()
   GET_products();
 });
 
+var debug = true;
+if ( debug )
+{
+  var SERVER_REST_URL = "http://localhost:5000/rest/products";
+}
+else
+{
+  var SERVER_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/products";
+}
+
 // REF. https://api.jquery.com/jquery.get/
 function GET_products()
 {
-  var debug = true;
-  if ( debug )
-  {
-    var SERVER_URL = "http://localhost:5000/rest/products/all";
-  }
-  else
-  {
-    var SERVER_URL = "https://dss-pharmacy.herokuapp.com/rest/products/all";
-  }
-
   $.ajax({
-    url: SERVER_URL,
+    url: SERVER_REST_URL + '/all',
     type: 'GET',
     dataType: 'json',
     success: function (products)
@@ -116,10 +135,31 @@ function GET_products()
     },
     error: function (request, message, error)
     {
-      console.log("Error performing GET on " + url);
+      console.log("Error performing GET on " + SERVER_REST_URL);
     }
   });
 }
+
+// REF. https://stackoverflow.com/questions/1200266/submit-a-form-using-jquery
+$(function POST_products()
+{
+  $('#add-product-form').submit(function() {
+    $.ajax({
+      url: SERVER_REST_URL,
+      type: 'POST',
+      data:$('#add-product-form').serialize(),
+      success: function (products)
+      {
+        location.reload();
+      },
+      error: function (request, message, error)
+      {
+        console.log("Error performing POST on " + SERVER_REST_URL);
+      }
+    });
+    return false;
+  });
+})
 </script>
 
 

@@ -83,6 +83,19 @@ def get_products():
     resp.status_code = 200
     return resp
 
+@app.route('/rest/products', methods=['POST'])
+def post_product():
+    parameters = request.form.to_dict()
+    print(parameters)
+    print(parameters['name'])
+    print(parameters['description'])
+    print(parameters['price'])
+
+    resp = jsonify({'status':'201'})
+    resp.status_code = 201
+    return resp
+
+
 @app.errorhandler(404)
 def not_found(error=None):
     return send_from_directory(html_dir, '404.html')
