@@ -10,6 +10,7 @@ from model.product import Product
 from model.daoproduct import DAOProduct
 from model.user import User
 from model.daouser import DAOUser
+from model.daopharmacy import DAOPharmacy
 
 VERSION = 0.1
 # App definition
@@ -21,6 +22,7 @@ MONGODB_URI = 'mongodb://user:user123@ds123584.mlab.com:23584/pharmacy'
 # DAOs
 # daoproduct = DAOProduct(MONGODB_URI)
 # daouser = DAOUser(MONGODB_URI)
+daophar = DAOPharmacy(MONGODB_URI)
 
 html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website')
 
@@ -40,6 +42,13 @@ def status():
     data['authors'] = authors
 
     resp = jsonify(data)
+    resp.status_code = 200
+    return resp
+
+@app.route('/rest/pharmacies', methods=['GET'])
+def get_pharmacies():
+    pharmacies = daophar.readAll()
+    resp = jsonify(pharmacies)
     resp.status_code = 200
     return resp
 
