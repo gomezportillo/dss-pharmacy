@@ -6,8 +6,6 @@ from flask import jsonify
 from flask import request
 from flask import abort
 
-import pymongo
-
 from model.daouser import DAOUser
 from model.daopharmacy import DAOPharmacy
 from model.daoproduct import DAOProduct
@@ -83,8 +81,8 @@ def GET_ALL_resources(resource):
 @app.route('/rest/<string:resource>', methods=['POST'])
 def POST_resource(resource):
     if resource in daos and resource in constructors:
-        product = constructors[resource](request.form.to_dict())
-        daos[resource].insert(product)
+        resource_obj = constructors[resource](request.form.to_dict())
+        daos[resource].insert(resource_obj)
         resp = jsonify({'status':'201'})
         resp.status_code = 201
         return resp

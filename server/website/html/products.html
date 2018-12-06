@@ -22,80 +22,86 @@
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="/">
-          <span class="glyphicon glyphicon-plus-sign"></span> Pharmacy manager
+          <b>Pharmacy manager</b>
         </a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li class="divider-vertical"></li>
-          <li><a href="/pharmacies">Pharmacies</a></li>
+          <li><a href="/pharmacies"><span class="glyphicon glyphicon-plus-sign"></span> Pharmacies</a></li>
           <li class="divider-vertical"></li>
-          <li class="active"><a href="/products">Products</a></li>
+          <li><a class="active" href="/products"><span class="glyphicon glyphicon-tint"></span> Products</a></li>
+          <li class="divider-vertical"></li>
+          <li><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
           <li class="divider-vertical"></li>
         </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li class="divider-vertical"></li>
+          <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+        </ul>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="container">
-    <br><br><br><br>
-    <h1>Products</h1>
+    <div class="container">
+      <br><br><br><br>
+      <h1>Products</h1>
 
-    <hr>
+      <hr>
 
-    <div class="col-md-12">
-      <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#see-products-tab">
-          <span class="glyphicon glyphicon-list-alt"></span> See products</a>
-        </li>
+      <div class="col-md-12">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#see-products-tab">
+            <span class="glyphicon glyphicon-list-alt"></span> See products</a>
+          </li>
 
-        <li><a data-toggle="tab" href="#add-products-tab">
-          <span class="glyphicon glyphicon-plus"></span> Add products</a>
-        </li>
-      </ul>
+          <li><a data-toggle="tab" href="#add-products-tab">
+            <span class="glyphicon glyphicon-plus"></span> Add products</a>
+          </li>
+        </ul>
 
-      <div class="tab-content">
-        <br>
-        <div id="see-products-tab" class="tab-pane fade in active">
-          <table class="table table-hover" id="table-products">
-            <thead>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Price (€)</th>
-              <th>Delete</th>
-            </thead>
-            <tbody>
-              <!--Products will be here-->
-            </tbody>
-          </table>
-        </div>
+        <div class="tab-content">
+          <br>
+          <div id="see-products-tab" class="tab-pane fade in active">
+            <table class="table table-hover" id="table-products">
+              <thead>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price (€)</th>
+                <th>Delete</th>
+              </thead>
+              <tbody>
+                <!--Products will be here-->
+              </tbody>
+            </table>
+          </div>
 
-        <div id="add-products-tab" class="tab-pane fade">
-          <form id="add-product-form">
-            <div class="form-group">
-              <label for="id">Name</label>
-              <input name="name" type="text" class="form-control" placeholder="Enter name" />
-            </div>
+          <div id="add-products-tab" class="tab-pane fade">
+            <form id="add-product-form">
+              <div class="form-group">
+                <label for="id">Name</label>
+                <input name="name" type="text" class="form-control" placeholder="Enter name" />
+              </div>
 
-            <div class="form-group">
-              <label for="id">Description</label>
-              <input name="description" type="text" class="form-control" placeholder="Enter description" />
-            </div>
+              <div class="form-group">
+                <label for="id">Description</label>
+                <input name="description" type="text" class="form-control" placeholder="Enter description" />
+              </div>
 
-            <div class="form-group">
-              <label for="id">Price (€)</label>
-              <input name="price" type="number" class="form-control" placeholder="Enter price" />
-            </div>
+              <div class="form-group">
+                <label for="id">Price (€)</label>
+                <input name="price" type="number" class="form-control" placeholder="Enter price" />
+              </div>
 
-            <div class="form-group">
-              <input value="Add product" type="submit" class="btn btn-primary" />
-            </div>
-          </form>
+              <div class="form-group">
+                <input value="Add product" type="submit" class="btn btn-primary" />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </body>
 
 <script type="text/javascript">

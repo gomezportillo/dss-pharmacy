@@ -21,8 +21,9 @@ class DAOUser:
 
     def readAll(self):
         users = {}
-        users['gomezportillo@ugr.es'] = 'Pedro Manuel Gomez-Portillo'
-        users['xenahort@ugr.es']      = 'Juan Carlos Serrano'
+        users['admin'] = 'admin'
+        users['gomezportillo'] = 'secretpassword'
+        users['xenahort']      = '1234'
         return users
 
     def delete(self, product):

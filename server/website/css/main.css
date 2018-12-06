@@ -1,11 +1,18 @@
-.navbar, .navbar-brand
+.navbar
 {
   background-image: none !important;
   font-size: 125%;
   height: 60px;
 }
 
-.navbar-nav a
+.navbar-brand
+{
+  font-size: 125%;
+  position: relative;
+  top: 4px;
+}
+
+.navbar-nav
 {
   font-size: 110%;
   position: relative;
@@ -14,7 +21,7 @@
 
 .divider-vertical
 {
-  height: 60px;
+  height: 55px;
   margin: 0 0px;
   border-left: 1px solid  #eee;
   border-right: 1px solid #eee;
