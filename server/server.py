@@ -42,6 +42,11 @@ css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', '
 def index():
     return send_from_directory(html_dir, 'index.html')
 
+@app.route('/products', methods=['GET'])
+def products():
+    return send_from_directory(html_dir, 'products.html')
+
+
 @app.route('/css/main.css', methods=['GET'])
 def get_css():
     return send_from_directory(css_dir, 'main.css')
@@ -71,9 +76,12 @@ def get_users():
     resp.status_code = 200
     return resp
 
-@app.route('/bad', methods=['DELETE'])
-def safsad():
-    pass
+@app.route('/rest/products/all', methods=['GET'])
+def get_products():
+    users = daoproduct.readAll()
+    resp = jsonify(users)
+    resp.status_code = 200
+    return resp
 
 @app.errorhandler(404)
 def not_found(error=None):

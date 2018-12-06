@@ -20,7 +20,12 @@ class DAOProduct:
         pass
 
     def readAll(self):
-        pass
+        products = {}
+        products['Ibuprofen'] = {'use': 'Cures headache', 'price': 10}
+        products['Frenadol']  = {'use': 'Cures flu', 'price': 12}
+        products['Bandage']   = {'use': 'Cures wounds', 'price': 10}
+        return products
+
 
     def delete(self, product):
         pass

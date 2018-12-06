@@ -53,3 +53,25 @@ The server will return JSON messages. All models will work under the _(URL)/rest
    "xenahort@ugr.es":"Juan Carlos Serrano"
 }
 ```
+
+* **/rest/products/all** will return the list of registered users with the following structure.
+
+```
+{
+   "Bandage":
+   {
+      "price":10,
+      "use":"Cures wounds"
+   },
+   "Frenadol":
+   {
+      "price":12,
+      "use":"Cures flu"
+   },
+   "Ibuprofen":
+   {
+      "price":10,
+      "use":"Cures headache"
+   }
+}
+```

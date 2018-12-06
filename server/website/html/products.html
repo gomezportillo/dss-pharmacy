@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Home - Pharmacy manager</title>
+  <title>Products - Pharmacy manager</title>
   <meta name="description" content="Pharmacy manager">
 
   <!-- style -->
@@ -22,7 +22,7 @@
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="/">
-          <b><span class=" glyphicon glyphicon-plus-sign"></span> Pharmacy manager</b>
+          <span class="glyphicon glyphicon-plus-sign"></span> Pharmacy manager
         </a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -30,7 +30,7 @@
           <li class="divider-vertical"></li>
           <li><a href="/pharmacies">Pharmacies</a></li>
           <li class="divider-vertical"></li>
-          <li><a href="/products">Products</a></li>
+          <li class="active"><a href="/products">Products</a></li>
           <li class="divider-vertical"></li>
         </ul>
       </div>
@@ -38,7 +38,52 @@
   </nav>
 
   <div class="container">
+    <br><br><br><br>
+    <h1>Products</h1>
+    <hr>
+
+    <div class="col-md-12">
+      <table class="table table-hover" id="table-products">
+        <thead>
+          <th>Name</th>
+          <th>Use</th>
+          <th>Price (€)</th>
+        </thead>
+        <tbody>
+          <!--Products will be here-->
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </body>
+
+<script type="text/javascript">
+$( document ).ready(function()
+{
+  GET_products();
+});
+
+// REF. https://api.jquery.com/jquery.get/
+function GET_products()
+{
+  var SERVER_URL = "http://localhost:5000/rest/products/all";
+
+  $.ajax({
+    url: SERVER_URL,
+    type: 'GET',
+    dataType: 'json',
+    success: function (products)
+    {
+      productListSuccess(products);
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing GET on " + url);
+    }
+  });
+}
+</script>
+
+
 </html>

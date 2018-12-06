@@ -9,13 +9,13 @@
 {
   font-size: 110%;
   position: relative;
-  top: 6px;
+  top: 4px;
 }
 
 .divider-vertical
 {
   height: 60px;
-  margin: 0 12px;
+  margin: 0 0px;
   border-left: 1px solid  #eee;
   border-right: 1px solid #eee;
 }
