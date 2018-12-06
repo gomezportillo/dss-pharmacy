@@ -1,5 +1,7 @@
 
 class Product:
 
-    def __init__(self):
-        pass
+    def __init__(self, name, description, price):
+        self.name = name
+        self.description = description
+        self.price = price

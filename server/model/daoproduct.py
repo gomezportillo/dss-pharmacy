@@ -13,18 +13,20 @@ class DAOProduct:
         self.collection = self.apolo_ddbb[COLLECTION_NAME]
         self.set_up_ddbb()
 
+        self.products = {}
+        self.products['Ibuprofen'] = {'description': 'Cures headache', 'price': 10}
+        self.products['Frenadol']  = {'description': 'Cures flu', 'price': 12}
+        self.products['Bandage']   = {'description': 'Cures wounds', 'price': 10}
+
+
     def insert(self, product):
-        pass
+        self.products[product.name] = {'description':product.description, 'price':product.price}
 
     def update(self, product):
         pass
 
     def readAll(self):
-        products = {}
-        products['Ibuprofen'] = {'description': 'Cures headache', 'price': 10}
-        products['Frenadol']  = {'description': 'Cures flu', 'price': 12}
-        products['Bandage']   = {'description': 'Cures wounds', 'price': 10}
-        return products
+        return self.products
 
 
     def delete(self, product):

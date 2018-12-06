@@ -76,12 +76,10 @@ def get_resource(resource_name):
 
 @app.route('/rest/products', methods=['POST'])
 def post_product():
-    parameters = request.form.to_dict()
-    print(parameters)
-    print(parameters['name'])
-    print(parameters['description'])
-    print(parameters['price'])
-
+    params = request.form.to_dict()
+    product = Product(params['name'], params['description'], params['price'])
+    daos['products'].insert(product)
+    
     resp = jsonify({'status':'201'})
     resp.status_code = 201
     return resp
