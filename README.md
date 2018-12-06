@@ -61,17 +61,17 @@ The server will return JSON messages. All models will work under the _(URL)/rest
    "Bandage":
    {
       "price":10,
-      "use":"Cures wounds"
+      "description":"Cures wounds"
    },
    "Frenadol":
    {
       "price":12,
-      "use":"Cures flu"
+      "description":"Cures flu"
    },
    "Ibuprofen":
    {
       "price":10,
-      "use":"Cures headache"
+      "description":"Cures headache"
    }
 }
 ```

@@ -21,9 +21,9 @@ class DAOProduct:
 
     def readAll(self):
         products = {}
-        products['Ibuprofen'] = {'use': 'Cures headache', 'price': 10}
-        products['Frenadol']  = {'use': 'Cures flu', 'price': 12}
-        products['Bandage']   = {'use': 'Cures wounds', 'price': 10}
+        products['Ibuprofen'] = {'description': 'Cures headache', 'price': 10}
+        products['Frenadol']  = {'description': 'Cures flu', 'price': 12}
+        products['Bandage']   = {'description': 'Cures wounds', 'price': 10}
         return products
 
 
