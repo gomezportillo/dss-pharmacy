@@ -2,26 +2,26 @@
 {
   background-image: none !important;
   font-size: 125%;
-  height: 60px;
+  /* height: 60px; */
 }
 
 .navbar-brand
 {
   font-size: 125%;
   position: relative;
-  top: 4px;
+  /* top: 4px; */
 }
 
 .navbar-nav
 {
   font-size: 110%;
   position: relative;
-  top: 4px;
+  /* top: 4px; */
 }
 
 .divider-vertical
 {
-  height: 55px;
+  height: 52px;
   margin: 0 0px;
   border-left: 1px solid  #eee;
   border-right: 1px solid #eee;

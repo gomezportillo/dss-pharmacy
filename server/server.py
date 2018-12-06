@@ -53,9 +53,9 @@ def get_css():
 def get_html_index():
     return send_from_directory(html_dir, 'index.html')
 
-@app.route('/products', methods=['GET'])
-def get_html_products():
-    return send_from_directory(html_dir, 'products.html')
+@app.route('/<string:path>', methods=['GET'])
+def get_html_products(path):
+    return send_from_directory(html_dir, path + '.html')
 
 @app.route('/rest/status', methods=['GET'])
 def get_status():
