@@ -68,8 +68,9 @@
               <thead>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Pharmacy</th>
                 <th>Price (€)</th>
+                <th>Pharmacy</th>
+                <th>Add to cart</th>
                 <th>Delete</th>
               </thead>
               <tbody>
@@ -90,16 +91,14 @@
                 <input name="description" type="text" class="form-control" placeholder="Enter description" />
               </div>
 
+              <div class="form-group">
+                <label for="id">Price (€)</label>
+                <input name="price" type="number" class="form-control" placeholder="Enter price" />
+              </div>
 
               <div class="form-group">
                 <label for="id">Pharmacy where is sold</label>
                 <input name="pharmacy" type="text" class="form-control" placeholder="Enter pharmacy where it belongs" />
-              </div>
-
-
-              <div class="form-group">
-                <label for="id">Price (€)</label>
-                <input name="price" type="number" class="form-control" placeholder="Enter price" />
               </div>
 
               <div class="form-group">
@@ -122,19 +121,20 @@ $( document ).ready(function()
 var debug = false;
 if ( debug )
 {
-  var SERVER_REST_URL = "http://localhost:5000/rest/products";
+  var PRODUCT_REST_URL = "http://localhost:5000/rest/products";
+  var ORDER_REST_URL = "http://localhost:5000/rest/orders";
 }
 else
 {
-  var SERVER_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/products";
+  var PRODUCT_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/products";
+  var ORDER_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/orders";
 }
 
 // REF. https://api.jquery.com/jquery.get/
 function GET_products()
 {
-  var button = '<button id="delete-product" class="btn btn-default col-md-3" type="button"><span class="glyphicon glyphicon-trash"></span></button>'
   $.ajax({
-    url: SERVER_REST_URL + '/all',
+    url: PRODUCT_REST_URL + '/all',
     type: 'GET',
     dataType: 'json',
     success: function (products)
@@ -142,17 +142,21 @@ function GET_products()
       $.each(products, function (key, value) {
         var new_row = '<tr><td>' + key + '</td>'+
         '<td>'+ value.description + '</td>'+
-        '<td>'+ value.pharmacy + '</td>'+
         '<td>'+ value.price + '</td>' +
+        '<td>'+ value.pharmacy + '</td>'+
 
-        '<td><button class="btn btn-primary col-md-3 delete-product-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
+        // Add to car button
+        '<td><button class="btn btn-primary col-md-3 add-to-cart-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-plus"></span></button></td>' +
+
+        // Delete button
+        '<td><button class="btn btn-danger col-md-5 delete-product-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
         '</tr>';
         jQuery("#table-products > tbody:last-child").append(new_row);
       });
     },
     error: function (request, message, error)
     {
-      console.log("Error performing GET on " + SERVER_REST_URL);
+      console.log("Error performing GET on " + PRODUCT_REST_URL);
     }
   });
 }
@@ -162,7 +166,7 @@ $(function POST_products()
 {
   $('#add-product-form').submit(function() {
     $.ajax({
-      url: SERVER_REST_URL,
+      url: PRODUCT_REST_URL,
       type: 'POST',
       data: $('#add-product-form').serialize(),
       success: function ()
@@ -171,7 +175,7 @@ $(function POST_products()
       },
       error: function (request, message, error)
       {
-        console.log("Error performing POST on " + SERVER_REST_URL);
+        console.log("Error performing POST on " + PRODUCT_REST_URL);
       }
     });
     return false;
@@ -181,7 +185,7 @@ $(function POST_products()
 $(document).on('click', '.delete-product-btn', function ()
 {
   $.ajax({
-    url: SERVER_REST_URL,
+    url: PRODUCT_REST_URL,
     type: 'DELETE',
     data: {'name':$(this).attr('id')},
     success: function ()
@@ -190,11 +194,40 @@ $(document).on('click', '.delete-product-btn', function ()
     },
     error: function (request, message, error)
     {
-      console.log("Error performing DELETE on " + SERVER_REST_URL);
+      console.log("Error performing DELETE on " + PRODUCT_REST_URL);
     }
   });
 });
 
+$(document).on('click', '.add-to-cart-btn', function ()
+{
+  var id = $(this).attr('id');
+
+  $('#table-products > tbody  > tr').each(function(index, row)
+  {
+    // Get the name of all products and compares it with the one selected
+    if (id == $(this).closest("tr").find('td:eq(0)').text())
+    {
+      description = $(this).closest("tr").find('td:eq(1)').text();
+      price = $(this).closest("tr").find('td:eq(2)').text();
+      pharmacy = $(this).closest("tr").find('td:eq(3)').text();
+    }
+  });
+
+  $.ajax({
+    url: ORDER_REST_URL,
+    type: 'POST',
+    data: {'name': id, 'description': description, 'price': price, 'pharmacy': pharmacy},
+    success: function ()
+    {
+      location.reload();
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing POST on " + ORDER_REST_URL);
+    }
+  });
+});
 </script>
 
 

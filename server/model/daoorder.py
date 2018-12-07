@@ -13,8 +13,14 @@ class DAOOrder:
         self.collection = self.apolo_ddbb[COLLECTION_NAME]
         self.set_up_ddbb()
 
+        self.shopping_cart = {}
+
     def insert(self, product):
-        pass
+        if product.name in self.shopping_cart:
+            quantity = self.shopping_cart[ product.name ]['quantity']
+            self.shopping_cart[ product.name ]['quantity'] = quantity+1
+        else:
+            self.shopping_cart[ product.name ] = {'description':product.description, 'pharmacy':product.pharmacy, 'price':product.price, 'quantity':1}
 
     def update(self, product):
         pass
