@@ -44,12 +44,13 @@
     </nav>
 
     <div class="container">
-      <br><br><br><br>
-      <h1>Products</h1>
-
-      <hr>
-
       <div class="col-md-12">
+
+        <br><br><br><br>
+        <h1>Products</h1>
+
+        <hr>
+
         <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="tab" href="#see-products-tab">
             <span class="glyphicon glyphicon-list-alt"></span> See products</a>
@@ -135,7 +136,7 @@ function GET_products()
         '<td>'+ value.description + '</td>'+
         '<td>'+ value.price + '</td>' +
 
-        '<td><button class="btn btn-default col-md-3 delete-product-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
+        '<td><button class="btn btn-primary col-md-3 delete-product-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
         '</tr>';
         jQuery("#table-products > tbody:last-child").append(new_row);
       });

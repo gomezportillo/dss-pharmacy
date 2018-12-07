@@ -13,25 +13,26 @@ class DAOPharmacy:
         self.collection = self.apolo_ddbb[COLLECTION_NAME]
         self.set_up_ddbb()
 
-    def insert(self, product):
-        pass
+        self.pharmacies = {}
+        self.pharmacies['Farmacia 1'] = {'latitude': 37.198366, 'longitude': -3.624976}
+        self.pharmacies['Farmacia 2'] = {'latitude': 37.195993, 'longitude': -3.622784}
 
-    def update(self, product):
+    def insert(self, pharmacy):
+        self.pharmacies[pharmacy.name] = {'latitude': pharmacy.lat, 'longitude': pharmacy.lon}
+
+    def update(self, pharmacy):
         pass
 
     def readAll(self):
-        pharms = {}
-        pharms['Farmacia 1'] = {'latitude': 37.198366, 'longitude': -3.624976}
-        pharms['Farmacia 2'] = {'latitude': 37.195993, 'longitude': -3.622784}
-        return pharms
+        return self.pharmacies
 
-    def delete(self, product):
+    def delete(self, pharmacy):
         pass
 
-    def deleteAll(self, product):
+    def deleteAll(self):
         pass
 
-    def find(self, product):
+    def find(self, pharmacy):
         pass
 
     def set_up_ddbb(self):
