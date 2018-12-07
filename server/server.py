@@ -34,6 +34,7 @@ daos['products']   = DAOProduct(MONGODB_URI)
 daos['users']      = DAOUser(MONGODB_URI)
 daos['pharmacies'] = DAOPharmacy(MONGODB_URI)
 daos['orders']     = DAOOrder(MONGODB_URI)
+daos['cart']     = DAOOrder(MONGODB_URI)
 
 # Constructors
 constructors = {}
@@ -41,6 +42,7 @@ constructors['products']   = Product
 constructors['users']      = User
 constructors['pharmacies'] = Pharmacy
 constructors['orders']     = Order
+constructors['cart']       = Product
 
 html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'html')
 css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')
@@ -91,7 +93,7 @@ def GET_ALL_resources(resource):
 @app.route('/rest/<string:resource>', methods=['POST'])
 def POST_resource(resource):
     if resource in daos and resource in constructors:
-        print(request.form.to_dict())
+        print('GET ' + str(request.form.to_dict()) + ' on ' + resource)
         resource_obj = constructors[resource](request.form.to_dict())
         daos[resource].insert(resource_obj)
         resp = jsonify({'status':'201'})

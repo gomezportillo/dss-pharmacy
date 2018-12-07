@@ -122,12 +122,12 @@ var debug = false;
 if ( debug )
 {
   var PRODUCT_REST_URL = "http://localhost:5000/rest/products";
-  var ORDER_REST_URL = "http://localhost:5000/rest/orders";
+  var CART_REST_URL = "http://localhost:5000/rest/cart";
 }
 else
 {
   var PRODUCT_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/products";
-  var ORDER_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/orders";
+  var CART_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/cart";
 }
 
 // REF. https://api.jquery.com/jquery.get/
@@ -215,7 +215,7 @@ $(document).on('click', '.add-to-cart-btn', function ()
   });
 
   $.ajax({
-    url: ORDER_REST_URL,
+    url: CART_REST_URL,
     type: 'POST',
     data: {'name': id, 'description': description, 'price': price, 'pharmacy': pharmacy},
     success: function ()
@@ -224,7 +224,7 @@ $(document).on('click', '.add-to-cart-btn', function ()
     },
     error: function (request, message, error)
     {
-      console.log("Error performing POST on " + ORDER_REST_URL);
+      console.log("Error performing POST on " + CART_REST_URL);
     }
   });
 });
