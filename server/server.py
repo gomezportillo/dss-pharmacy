@@ -44,6 +44,7 @@ constructors['orders']     = Order
 
 html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'html')
 css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')
+img_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'img')
 
 @app.route('/css/main.css', methods=['GET'])
 def get_css():
@@ -52,6 +53,15 @@ def get_css():
 @app.route('/', methods=['GET'])
 def get_html_index():
     return send_from_directory(html_dir, 'index.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(img_dir, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/img/logo.jpg', methods=['GET'])
+def get_logo():
+    return send_from_directory(img_dir, 'logo.jpg')
+
 
 @app.route('/<string:path>', methods=['GET'])
 def get_html_products(path):
