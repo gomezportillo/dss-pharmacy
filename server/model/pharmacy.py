@@ -1,8 +1,7 @@
 
 class Pharmacy:
 
-    def __init__(self, name, lat, lon):
-        self.name = name
-        self.lat = lat
-        self.lon = lon
-    
+    def __init__(self, dict):
+        self.name = dict['name']
+        self.lat = dict['latitude']
+        self.lon = dict['longitude']

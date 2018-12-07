@@ -18,7 +18,7 @@ class DAOPharmacy:
         self.pharmacies['Farmacia 2'] = {'latitude': 37.195993, 'longitude': -3.622784}
 
     def insert(self, pharmacy):
-        self.pharmacies[pharmacy.name] = {'latitude': pharmacy.lat, 'longitude': pharmacy.lon}
+        self.pharmacies[pharmacy.name] = {'latitude': float(pharmacy.lat), 'longitude': float(pharmacy.lon)}
 
     def update(self, pharmacy):
         pass

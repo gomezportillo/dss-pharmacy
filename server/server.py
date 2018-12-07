@@ -80,7 +80,11 @@ def GET_ALL_resources(resource):
 
 @app.route('/rest/<string:resource>', methods=['POST'])
 def POST_resource(resource):
+    print('POST on ' + resource)
     if resource in daos and resource in constructors:
+        print(request)
+        print(request.form)
+        print(request.form.to_dict())
         resource_obj = constructors[resource](request.form.to_dict())
         daos[resource].insert(resource_obj)
         resp = jsonify({'status':'201'})
