@@ -14,13 +14,13 @@ class DAOProduct:
         self.set_up_ddbb()
 
         self.products = {}
-        self.products['Ibuprofen'] = {'description': 'Cures headache', 'price': 10}
-        self.products['Frenadol']  = {'description': 'Cures flu', 'price': 12}
-        self.products['Bandage']   = {'description': 'Cures wounds', 'price': 10}
+        self.products['Ibuprofen'] = {'description': 'Cures headache', 'pharmacy': 'Farmacia 1', 'price': 10}
+        self.products['Frenadol']  = {'description': 'Cures flu', 'pharmacy': 'Farmacia 2',  'price': 12}
+        self.products['Bandage']   = {'description': 'Cures wounds', 'pharmacy': 'Farmacia 1',  'price': 10}
 
 
     def insert(self, product):
-        self.products[product.name] = {'description':product.description, 'price':product.price}
+        self.products[product.name] = {'description':product.description, 'pharmacy':product.pharmacy, 'price':product.price}
 
     def update(self, product):
         pass
