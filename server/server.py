@@ -10,6 +10,7 @@ from model.daouser import DAOUser
 from model.daopharmacy import DAOPharmacy
 from model.daoproduct import DAOProduct
 from model.daoorder import DAOOrder
+from model.daocart import DAOCart
 
 from model.order import Order
 from model.pharmacy import Pharmacy
@@ -34,7 +35,7 @@ daos['products']   = DAOProduct(MONGODB_URI)
 daos['users']      = DAOUser(MONGODB_URI)
 daos['pharmacies'] = DAOPharmacy(MONGODB_URI)
 daos['orders']     = DAOOrder(MONGODB_URI)
-daos['cart']     = DAOOrder(MONGODB_URI)
+daos['cart']       = DAOCart()
 
 # Constructors
 constructors = {}
@@ -93,7 +94,7 @@ def GET_ALL_resources(resource):
 @app.route('/rest/<string:resource>', methods=['POST'])
 def POST_resource(resource):
     if resource in daos and resource in constructors:
-        print('GET ' + str(request.form.to_dict()) + ' on ' + resource)
+        print('POST ' + str(request.form.to_dict()) + ' on ' + resource)
         resource_obj = constructors[resource](request.form.to_dict())
         daos[resource].insert(resource_obj)
         resp = jsonify({'status':'201'})

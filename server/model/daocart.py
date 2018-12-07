@@ -4,7 +4,7 @@ from model import product
 
 PRIMARY_KEY = 'id'
 
-class DAOOCart:
+class DAOCart:
 
     def __init__(self):
         self.shopping_cart = {}
@@ -20,7 +20,7 @@ class DAOOCart:
         pass
 
     def readAll(self):
-        pass
+        return self.shopping_cart
 
     def delete(self, product):
         pass

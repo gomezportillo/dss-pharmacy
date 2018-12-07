@@ -49,10 +49,64 @@
       <br><br><br><br>
       <h1>Cart</h1>
       <hr>
-      <br><br>
 
+      <table class="table table-hover" id="table-cart">
+        <thead>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price (€)</th>
+          <th>Pharmacy</th>
+          <th>Quantity</th>
+        </thead>
+        <tbody>
+          <!--Products will be here-->
+        </tbody>
+      </table>
 
     </div>
   </div>
 </body>
+<script type="text/javascript">
+$( document ).ready(function()
+{
+  GET_cart();
+});
+
+var debug = false;
+if ( debug )
+{
+  var CART_REST_URL = "http://localhost:5000/rest/cart";
+  var ORDERS_REST_URL = "http://localhost:5000/rest/orders";
+}
+else
+{
+  var CART_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/cart";
+  var ORDERS_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/orders";
+}
+
+function GET_cart()
+{
+  $.ajax({
+    url: CART_REST_URL + '/all',
+    type: 'GET',
+    dataType: 'json',
+    success: function (products)
+    {
+      $.each(products, function (key, value) {
+        var new_row = '<tr><td>' + key + '</td>'+
+        '<td>'+ value.description + '</td>'+
+        '<td>'+ value.price + '</td>' +
+        '<td>'+ value.pharmacy + '</td>'+
+        '<td>'+ value.quantity + '</td>';
+
+        jQuery("#table-cart > tbody:last-child").append(new_row);
+      });
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing GET on " + PRODUCT_REST_URL);
+    }
+  });
+}
+</script>
 </html>
