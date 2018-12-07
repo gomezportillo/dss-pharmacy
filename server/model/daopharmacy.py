@@ -26,8 +26,8 @@ class DAOPharmacy:
     def readAll(self):
         return self.pharmacies
 
-    def delete(self, pharmacy):
-        pass
+    def delete(self, key):
+        self.pharmacies.pop(key)
 
     def deleteAll(self):
         pass

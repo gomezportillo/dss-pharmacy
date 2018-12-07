@@ -80,10 +80,7 @@ def GET_ALL_resources(resource):
 
 @app.route('/rest/<string:resource>', methods=['POST'])
 def POST_resource(resource):
-    print('POST on ' + resource)
     if resource in daos and resource in constructors:
-        print(request)
-        print(request.form)
         print(request.form.to_dict())
         resource_obj = constructors[resource](request.form.to_dict())
         daos[resource].insert(resource_obj)
@@ -93,10 +90,10 @@ def POST_resource(resource):
     else:
         abort(404)
 
-@app.route('/rest/products', methods=['DELETE'])
-def DELETE_product():
+@app.route('/rest/<string:resource>', methods=['DELETE'])
+def DELETE_product(resource):
     name = request.form.to_dict()['name']
-    daos['products'].delete(name)
+    daos[resource].delete(name)
     resp = jsonify({'status':'201'})
     resp.status_code = 201
     return resp

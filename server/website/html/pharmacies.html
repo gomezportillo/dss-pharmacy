@@ -89,17 +89,17 @@
           <form id="add-pharmacy-form">
             <div class="form-group">
               <label for="id">Name</label>
-              <input name="name" type="text" class="form-control" placeholder="Enter name" />
+              <input name="name" type="text" class="form-control" value="Farmacia 3" placeholder="Enter name" />
             </div>
 
             <div class="form-group">
               <label for="id">Latitude</label>
-              <input name="latitude" type="number" step="0.0001" class="form-control" placeholder="Enter latitude" />
+              <input name="latitude" type="number" step="0.0001" class="form-control" value="37.197" placeholder="Enter latitude" />
             </div>
 
             <div class="form-group">
               <label for="id">Longitude</label>
-              <input name="longitude" type="number" step="0.0001" class="form-control" placeholder="Enter longitude" />
+              <input name="longitude" type="number" step="0.0001" class="form-control" value="-3.62" placeholder="Enter longitude" />
             </div>
 
             <div class="form-group">
@@ -178,6 +178,23 @@
       return false;
     });
   })
+
+  $(document).on('click', '.delete-pharmacy-btn', function ()
+  {
+    $.ajax({
+      url: SERVER_REST_URL,
+      type: 'DELETE',
+      data: {'name':$(this).attr('id')},
+      success: function ()
+      {
+        location.reload();
+      },
+      error: function (request, message, error)
+      {
+        console.log("Error performing DELETE on " + SERVER_REST_URL);
+      }
+    });
+  });
 
   // REF. https://developers.google.com/maps/documentation/javascript/adding-a-google-map
   function initMap()
