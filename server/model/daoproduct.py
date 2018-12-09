@@ -16,7 +16,10 @@ class DAOProduct:
 
 
     def insert(self, product):
-        self.products.append( product )
+        if self.find(product.name) is None:
+            self.products.append( product )
+        else:
+            self.update(product)
 
 
     def update(self, new_product):
@@ -24,6 +27,7 @@ class DAOProduct:
             if product.name == new_product.name:
                 self.products.remove(product)
                 self.products.append(new_product)
+
 
     def readAll(self):
         return [ product.toJSON() for product in self.products ]
@@ -41,7 +45,7 @@ class DAOProduct:
 
     def find(self, product_name):
         for product in self.products:
-            if product.name == name:
+            if product.name == product_name:
                 return product
         return None
 
