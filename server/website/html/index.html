@@ -34,6 +34,7 @@
           <li class="divider-vertical"></li>
           <li><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
           <li class="divider-vertical"></li>
+          <li><a href="/users"><span class="glyphicon glyphicon-th-list"></span> Orders</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -102,8 +103,8 @@ function GET_server_status()
       $("#server-version").html("<b>Server version:</b> " + status_json.version);
       $("#github-link").html("<b>Server GitHub repository:</b> " +
         "<a href=" + status_json.repository + ">" + status_json.repository + "</a>");
-      $("#server-dev").html("<b>Server version:</b> " + status_json.server_dev);
-      $("#android-dev").html("<b>Server version:</b> " + status_json.android_dev);
+      $("#server-dev").html("<b>Server developer:</b> " + status_json.server_dev);
+      $("#android-dev").html("<b>Android app developer:</b> " + status_json.android_dev);
     },
     error: function (request, message, error)
     {
