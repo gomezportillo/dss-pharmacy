@@ -14,8 +14,8 @@ class DAOOrder:
         self.set_up_ddbb()
 
 
-    def insert(self, product):
-        pass
+    def insert(self, order):
+        self.orders.append( order )
 
 
     def update(self, product):
@@ -23,7 +23,7 @@ class DAOOrder:
 
 
     def readAll(self):
-        pass
+        return [ order.toJSON() for order in self.orders ]
 
 
     def delete(self, product):
@@ -31,7 +31,7 @@ class DAOOrder:
 
 
     def deleteAll(self):
-        pass
+        self.orders = []
 
 
     def find(self, product):
@@ -39,4 +39,5 @@ class DAOOrder:
 
 
     def set_up_ddbb(self):
-        self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
+        # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
+        self.orders = []

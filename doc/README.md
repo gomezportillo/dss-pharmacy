@@ -7,6 +7,7 @@
 	- [Products](#products)
 	- [Pharmacies](#pharmacies)
 	- [Cart](#cart)
+	- [Order](#order)
 
 <!-- /TOC -->
 
@@ -50,9 +51,9 @@
 ]
 ```
 
-**POST** or **PUT** `/rest/products/` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product or override it if already exists one with the same name.
+**POST** or **PUT** `/rest/products` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product or override it if already exists one with the same name.
 
-**DELETE** `/rest/products/` indicating the _name_ of the product to be deleted will delete it.
+**DELETE** `/rest/products` indicating the _name_ of the product to be deleted will delete it.
 
 ## Pharmacies
 
@@ -73,9 +74,9 @@
 ]
 ```
 
-**POST** or **PUT** `/rest/pharmacies/` indicating _name_, _latitude_ and _longitude_ will create a new pharmacy or override it if already exists one with the same name.
+**POST** or **PUT** `/rest/pharmacies` indicating _name_, _latitude_ and _longitude_ will create a new pharmacy or override it if already exists one with the same name.
 
-**DELETE** `/rest/pharmacies/` indicating the _name_ of the pharmacy will delete it.
+**DELETE** `/rest/pharmacies` indicating the _name_ of the pharmacy will delete it.
 
 ## Cart
 
@@ -100,19 +101,53 @@
 ]
 ```
 
-**POST** or **PUT** `/rest/cart/` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product in the cart or add it +1 quantity if already exists one with the same name.
+**POST** or **PUT** `/rest/cart` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product in the cart or add it +1 quantity if already exists one with the same name.
 
 **DELETE** `/rest/cart/all` will delete the whole shopping cart.
 
+
+## Order
+
+**GET** `/rest/orders/all` will return the list of all the orders in the cart with the following format.
+
+```
+[  
+   {  
+      "email":"user1@email.com",
+      "products":[  
+         {  
+            "description":"Cures headache",
+            "name":"Ibuprofen",
+            "pharmacy":"Pharmacy 1",
+            "price":"7",
+            "quantity":1
+         }
+      ],
+      "type":"Reserve"
+   },
+   {  
+		 "email":"user2@email.com",
+      "products":[  
+         {  
+            "description":"Cures flu",
+            "name":"Frenadol",
+            "pharmacy":"Pharmacy 2",
+            "price":"12",
+            "quantity":2
+         },
+         {  
+            "description":"Cures wounds",
+            "name":"Bandage",
+            "pharmacy":"Pharmacy 1",
+            "price":"10",
+            "quantity":1
+         }
+      ],
+      "type":"Purchase"
+   }
+]
+```
+
+**POST** or **PUT** `/rest/order` indicating _email_ and _type_ will create a new order with the products that are currently on the cart (no need to specify them). The type of the order can be **Reserve** if it is a reserve or **Purchase** if the user has bought the products. No reestrictions regarding quantity or pharmacies are applied.
+
 ⚠️TO DO⚠️
-
-<!--
-* **/rest/users/all** will return the list of registered users with the following structure.
-
-```
-{  
-   "gomezportillo@ugr.es":"Pedro Manuel Gomez-Portillo",
-   "xenahort@ugr.es":"Juan Carlos Serrano"
-}
-```
--->

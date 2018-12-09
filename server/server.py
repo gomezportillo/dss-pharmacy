@@ -67,6 +67,21 @@ def POST_resource(resource):
         abort(404)
 
 
+@app.route('/rest/orders', methods=['POST', 'PUT'])
+def POST_order():
+    # TODO comprobar si el email existe en la lista de usuarios
+    email = request.form.to_dict()['email']
+    type = request.form.to_dict()['type']
+    cart  = daos['cart'].readAll()
+
+    order = Order(email, type, cart)
+    daos['orders'].insert( order )
+    daos['cart'].deleteAll()
+
+    resp = jsonify({'status': '201'})
+    resp.status_code = 201
+    return resp
+
 @app.route('/rest/<string:resource>', methods=['DELETE'])
 def DELETE_product(resource):
     name = request.form.to_dict()['name']
