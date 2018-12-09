@@ -49,17 +49,21 @@ html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 
 css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')
 img_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'img')
 
+
 @app.route('/css/main.css', methods=['GET'])
 def get_css():
     return send_from_directory(css_dir, 'main.css')
+
 
 @app.route('/', methods=['GET'])
 def get_html_index():
     return send_from_directory(html_dir, 'index.html')
 
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(img_dir, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route('/img/logo.jpg', methods=['GET'])
 def get_logo():
@@ -69,6 +73,7 @@ def get_logo():
 @app.route('/<string:path>', methods=['GET'])
 def get_html_products(path):
     return send_from_directory(html_dir, path + '.html')
+
 
 @app.route('/rest/status', methods=['GET'])
 def get_status():
@@ -81,6 +86,7 @@ def get_status():
     resp.status_code = 200
     return resp
 
+
 @app.route('/rest/<string:resource>/all', methods=['GET'])
 def GET_ALL_resources(resource):
     if resource in daos:
@@ -91,29 +97,33 @@ def GET_ALL_resources(resource):
     else:
         abort(404)
 
-@app.route('/rest/<string:resource>', methods=['POST'])
+
+@app.route('/rest/<string:resource>', methods=['POST', 'PUT'])
 def POST_resource(resource):
     if resource in daos and resource in constructors:
         print('POST ' + str(request.form.to_dict()) + ' on ' + resource)
         resource_obj = constructors[resource](dict=request.form.to_dict())
         daos[resource].insert(resource_obj)
-        resp = jsonify({'status':'201'})
+        resp = jsonify({'status': '201'})
         resp.status_code = 201
         return resp
     else:
         abort(404)
 
+
 @app.route('/rest/<string:resource>', methods=['DELETE'])
 def DELETE_product(resource):
     name = request.form.to_dict()['name']
     daos[resource].delete(name)
-    resp = jsonify({'status':'201'})
+    resp = jsonify({'status': '201'})
     resp.status_code = 201
     return resp
+
 
 @app.errorhandler(404)
 def not_found(error=None):
     return send_from_directory(html_dir, '404.html')
+
 
 @app.errorhandler(405)
 def not_allowed(error=None):
@@ -123,6 +133,7 @@ def not_allowed(error=None):
     resp = jsonify(data)
     resp.status_code = 405
     return resp
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

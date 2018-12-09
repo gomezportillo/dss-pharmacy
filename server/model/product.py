@@ -14,6 +14,7 @@ class Product:
             self.pharmacy    = dict['pharmacy']
             self.price       = dict['price']
 
+
     def toJSON(self):
         # return json.dumps(self, default=lambda o: o.__dict__)
         return {'name':self.name,'description':self.description,'pharmacy':self.pharmacy,'price':self.price}

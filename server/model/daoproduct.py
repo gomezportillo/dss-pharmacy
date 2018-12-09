@@ -14,25 +14,37 @@ class DAOProduct:
         self.products = []
         self.set_up_ddbb()
 
+
     def insert(self, product):
         self.products.append( product )
 
-    def update(self, product):
-        pass
+
+    def update(self, new_product):
+        for product in self.products:
+            if product.name == new_product.name:
+                self.products.remove(product)
+                self.products.append(new_product)
 
     def readAll(self):
         return [ product.toJSON() for product in self.products ]
+
 
     def delete(self, name):
         for product in self.products:
             if product.name == name:
                 self.products.remove(product)
 
+
     def deleteAll(self):
         self.products = []
 
-    def find(self, product):
-        pass
+
+    def find(self, product_name):
+        for product in self.products:
+            if product.name == name:
+                return product
+        return None
+
 
     def set_up_ddbb(self):
         # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
