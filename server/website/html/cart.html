@@ -93,7 +93,7 @@ function GET_cart()
     success: function (products)
     {
       $.each(products, function (key, value) {
-        var new_row = '<tr><td>' + key + '</td>'+
+        var new_row = '<tr><td>' + value.name + '</td>'+
         '<td>'+ value.description + '</td>'+
         '<td>'+ value.price + '</td>' +
         '<td>'+ value.pharmacy + '</td>'+

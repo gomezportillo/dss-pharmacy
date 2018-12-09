@@ -15,7 +15,7 @@ from model.order import Order
 from model.pharmacy import Pharmacy
 from model.product import Product
 from model.user import User
-
+from model.product_cart import ProductCart
 
 # Metadata
 VERSION = 0.6
@@ -43,7 +43,7 @@ constructors['products']   = Product
 constructors['users']      = User
 constructors['pharmacies'] = Pharmacy
 constructors['orders']     = Order
-constructors['cart']       = Product
+constructors['cart']       = ProductCart
 
 html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'html')
 css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')

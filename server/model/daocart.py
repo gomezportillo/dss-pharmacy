@@ -1,32 +1,44 @@
 import pymongo
 
-from model import product
+from model.product_cart import ProductCart
 
-PRIMARY_KEY = 'id'
+PRIMARY_KEY = 'name'
 
 class DAOCart:
 
     def __init__(self):
-        self.shopping_cart = {}
+        self.shopping_cart = []
 
-    def insert(self, product):
-        if product.name in self.shopping_cart:
-            quantity = self.shopping_cart[ product.name ]['quantity']
-            self.shopping_cart[ product.name ]['quantity'] = quantity+1
+
+    def insert(self, new_product):
+        if self.find( new_product.name ) is None:
+            self.shopping_cart.append( new_product )
         else:
-            self.shopping_cart[ product.name ] = {'description':product.description, 'pharmacy':product.pharmacy, 'price':product.price, 'quantity':1}
+            for product in self.shopping_cart:
+                if product.name == new_product.name:
+                    product.quantity += 1
+
 
     def update(self, product):
         pass
 
-    def readAll(self):
-        return self.shopping_cart
 
-    def delete(self, product):
-        pass
+    def readAll(self):
+        return [ product.toJSON() for product in self.shopping_cart ]
+
+
+    def delete(self, product_name):
+        for product in self.shopping_cart:
+            if product.name == product_name:
+                self.shopping_cart.remove(product)
+
 
     def deleteAll(self):
-        pass
+        self.shopping_cart = []
 
-    def find(self, product):
-        pass
+
+    def find(self, product_name):
+        for product in self.shopping_cart:
+            if product.name == product_name:
+                return product
+        return None
