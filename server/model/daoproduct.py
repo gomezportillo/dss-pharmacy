@@ -1,6 +1,6 @@
 import pymongo
 
-from model import product
+from model.product import Product
 
 PRIMARY_KEY = 'name'
 COLLECTION_NAME = 'products'
@@ -11,31 +11,35 @@ class DAOProduct:
         self.mongo_client = pymongo.MongoClient(MONGODB_URI)
         self.apolo_ddbb = self.mongo_client.get_database()
         self.collection = self.apolo_ddbb[COLLECTION_NAME]
+        self.products = []
         self.set_up_ddbb()
 
-        self.products = {}
-        self.products['Ibuprofen'] = {'description': 'Cures headache', 'pharmacy': 'Farmacia 1', 'price': 10}
-        self.products['Frenadol']  = {'description': 'Cures flu', 'pharmacy': 'Farmacia 2',  'price': 12}
-        self.products['Bandage']   = {'description': 'Cures wounds', 'pharmacy': 'Farmacia 1',  'price': 10}
-
-
     def insert(self, product):
-        self.products[product.name] = {'description':product.description, 'pharmacy':product.pharmacy, 'price':product.price}
+        self.products.append( product )
 
     def update(self, product):
         pass
 
     def readAll(self):
-        return self.products
+        return [ product.toJSON() for product in self.products ]
 
-    def delete(self, key):
-        self.products.pop(key)
+    def delete(self, name):
+        for product in self.products:
+            if product.name == name:
+                self.products.remove(product)
 
     def deleteAll(self):
-        pass
+        self.products = []
 
     def find(self, product):
         pass
 
     def set_up_ddbb(self):
-        self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
+        # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
+        product1 = Product('Ibuprofen', 'Cures headache', 'Pharmacy 1', 7)
+        product2 = Product('Frenadol', 'Cures flu', 'Pharmacy 2', 12)
+        product3 = Product('Bandage', 'Cures wounds', 'Pharmacy 1', 10)
+
+        self.products.append( product1 )
+        self.products.append( product2 )
+        self.products.append( product3 )

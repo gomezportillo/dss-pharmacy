@@ -140,16 +140,16 @@ function GET_products()
     success: function (products)
     {
       $.each(products, function (key, value) {
-        var new_row = '<tr><td>' + key + '</td>'+
+        var new_row = '<tr><td>' + value.name + '</td>'+
         '<td>'+ value.description + '</td>'+
         '<td>'+ value.price + '</td>' +
         '<td>'+ value.pharmacy + '</td>'+
 
         // Add to car button
-        '<td><button class="btn btn-primary col-md-3 add-to-cart-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-plus"></span></button></td>' +
+        '<td><button class="btn btn-primary col-md-3 add-to-cart-btn" id="' + value.name + '" type="button"><span class="glyphicon glyphicon-plus"></span></button></td>' +
 
         // Delete button
-        '<td><button class="btn btn-danger col-md-5 delete-product-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
+        '<td><button class="btn btn-danger col-md-5 delete-product-btn" id="' + value.name + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
         '</tr>';
         jQuery("#table-products > tbody:last-child").append(new_row);
       });
