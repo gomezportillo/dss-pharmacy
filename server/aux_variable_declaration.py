@@ -18,11 +18,12 @@ from model.user import User
 from model.product_cart import ProductCart
 
 # Metadata
-VERSION = 0.6
-authors = {}
-authors['server'] = '@gomezportillo'
-authors['mobile-app'] = '@xenahort'
-
+VERSION = 0.7
+server_info = {}
+server_info['version'] = VERSION
+server_info['server_dev'] = 'Pedro Manuel Gómez-Portillo'
+server_info['android_dev'] = 'Juan Carlos Serrano'
+server_info['repository'] = 'https://github.com/gomezportillo/dss-pharmacy'
 
 # MongoDB URI
 MONGODB_URI = 'mongodb://user:user123@ds123584.mlab.com:23584/pharmacy'

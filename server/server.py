@@ -38,12 +38,7 @@ def get_html_products(path):
 
 @app.route('/rest/status', methods=['GET'])
 def get_status():
-    data = {}
-    data['status'] = 'OK'
-    data['version'] = VERSION
-    data['authors'] = authors
-
-    resp = jsonify(data)
+    resp = jsonify( server_info )
     resp.status_code = 200
     return resp
 

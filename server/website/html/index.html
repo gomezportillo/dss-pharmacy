@@ -49,12 +49,68 @@
       <br><br><br><br>
       <h1>Welcome to the pharmacy management application.</h1>
       <hr>
-      <br><br>
-      <div class="col-md-6 col-md-offset-4">
-        <img src="/img/logo.jpg" alt="Logo" height="250">
+
+      <div class="row">
+        <div class="col-md-6 col-md-offset-4">
+          <img src="/img/logo.jpg" alt="Logo" height="250" vspace="40">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-7 col-md-offset-2">
+          <div class="well well-lg">
+            <p id="server-version">
+            </p>
+            <p id="github-link">
+            </p>
+            <p id="server-dev">
+            </p>
+            <p id="android-dev">
+            </p>
+          </div>
+        </div>
       </div>
 
     </div>
   </div>
 </body>
+
+<script type="text/javascript">
+$( document ).ready(function()
+{
+  GET_server_status();
+});
+
+var debug = true;
+if ( debug )
+{
+  var STATUS_REST_URL = "http://localhost:5000/rest/status";
+}
+else
+{
+  var STATUS_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/status";
+}
+
+function GET_server_status()
+{
+  $.ajax({
+    url: STATUS_REST_URL,
+    type: 'GET',
+    dataType: 'json',
+    success: function (status_json)
+    {
+      $("#server-version").html("<b>Server version:</b> " + status_json.version);
+      $("#github-link").html("<b>Server GitHub repository:</b> " +
+        "<a href=" + status_json.repository + ">" + status_json.repository + "</a>");
+      $("#server-dev").html("<b>Server version:</b> " + status_json.server_dev);
+      $("#android-dev").html("<b>Server version:</b> " + status_json.android_dev);
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing GET on " + STATUS_REST_URL);
+    }
+  });
+}
+
+</script>
 </html>
