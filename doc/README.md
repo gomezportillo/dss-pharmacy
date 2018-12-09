@@ -43,33 +43,36 @@
 ]
 ```
 
-**POST** `/rest/products/` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product.
+**POST** or **PUT** `/rest/products/` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product or override it if already exists one with the same name.
 
 **DELETE** `/rest/products/` indicating the _name_ of the product to be deleted will delete it.
 
+## Pharmacies
+
+**GET** `/rest/pharmacies/all` will return the list of registered pharmacies with the following structure.
+
+```
+[  
+   {  
+      "latitude":37.198366,
+      "longitude":-3.624976,
+      "name":"Pharmacy 1"
+   },
+   {  
+      "latitude":37.195993,
+      "longitude":-3.622784,
+      "name":"Pharmacy 2"
+   }
+]
+```
+
+**POST** or **PUT** `/rest/pharmacies/` indicating _name_, _latitude_ and _longitude_ will create a new pharmacy or override it if already exists one with the same name.
+
+**DELETE** `/rest/pharmacies/` indicating the _name_ of the pharmacy will delete it.
 
 ⚠️TO DO⚠️
 
 <!--
-## Pharmacies
-
-* **/rest/pharmacies/all** will return the list of registered pharmacies with the following structure.
-
-```
-{  
-   "Farmacia 1":
-   {  
-      "latitude":37.198366,
-      "longitude":-3.624976
-   },
-   "Farmacia 2":
-   {  
-      "latitude":37.195993,
-      "longitude":-3.622784
-   }
-}
-```
-
 * **/rest/users/all** will return the list of registered users with the following structure.
 
 ```

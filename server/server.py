@@ -18,7 +18,7 @@ from model.product import Product
 from model.user import User
 
 # Metadata
-VERSION = 0.3
+VERSION = 0.5
 authors = {}
 authors['server'] = '@gomezportillo'
 authors['mobile-app'] = '@xenahort'

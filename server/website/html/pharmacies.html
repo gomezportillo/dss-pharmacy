@@ -89,7 +89,7 @@
           <form id="add-pharmacy-form">
             <div class="form-group">
               <label for="id">Name</label>
-              <input name="name" type="text" class="form-control" value="Farmacia 3" placeholder="Enter name" />
+              <input name="name" type="text" class="form-control" value="Pharmacy 3" placeholder="Enter name" />
             </div>
 
             <div class="form-group">
@@ -140,14 +140,14 @@
         {
           // Create marker with that pharmacy
           var coordinate = {lat: value.latitude, lng: value.longitude}
-          new google.maps.Marker({position: coordinate, map: map, title: key});
+          new google.maps.Marker({position: coordinate, map: map, title: value.name});
 
           // Add it to the table
-          var new_row = '<tr><td>' + key + '</td>'+
+          var new_row = '<tr><td>' + value.name + '</td>'+
           '<td>'+ value.latitude + '</td>'+
           '<td>'+ value.longitude + '</td>' +
 
-          '<td><button class="btn btn-danger col-md-3 delete-pharmacy-btn" id="' + key + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
+          '<td><button class="btn btn-danger col-md-3 delete-pharmacy-btn" id="' + value.name + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
           '</tr>';
           jQuery("#table-pharmacies > tbody:last-child").append(new_row);
         });
@@ -161,7 +161,8 @@
 
   $(function POST_pharmacy()
   {
-    $('#add-pharmacy-form').submit(function() {
+    $('#add-pharmacy-form').submit(function()
+    {
       $.ajax({
         url: SERVER_REST_URL,
         type: 'POST',

@@ -1,6 +1,6 @@
 import pymongo
 
-from model import pharmacy
+from model.pharmacy import Pharmacy
 
 PRIMARY_KEY = 'name'
 COLLECTION_NAME = 'pharmacies'
@@ -11,29 +11,47 @@ class DAOPharmacy:
         self.mongo_client = pymongo.MongoClient(MONGODB_URI)
         self.apolo_ddbb = self.mongo_client.get_database()
         self.collection = self.apolo_ddbb[COLLECTION_NAME]
+        self.pharmacies = []
         self.set_up_ddbb()
 
-        self.pharmacies = {}
-        self.pharmacies['Farmacia 1'] = {'latitude': 37.198366, 'longitude': -3.624976}
-        self.pharmacies['Farmacia 2'] = {'latitude': 37.195993, 'longitude': -3.622784}
 
     def insert(self, pharmacy):
-        self.pharmacies[pharmacy.name] = {'latitude': float(pharmacy.lat), 'longitude': float(pharmacy.lon)}
+        if self.find(pharmacy.name) is None:
+            self.pharmacies.append( pharmacy )
+        else:
+            self.update(pharmacy)
 
-    def update(self, pharmacy):
-        pass
+    def update(self, new_pharmacy):
+        for pharmacy in self.pharmacies:
+            if pharmacy.name == new_pharmacy.name:
+                self.pharmacies.remove(pharmacy)
+                self.pharmacies.append(new_pharmacy)
 
     def readAll(self):
-        return self.pharmacies
+        return [ pharmacy.toJSON() for pharmacy in self.pharmacies ]
 
-    def delete(self, key):
-        self.pharmacies.pop(key)
+
+    def delete(self, name):
+        for pharmacy in self.pharmacies:
+            if pharmacy.name == name:
+                self.pharmacies.remove(pharmacy)
+
 
     def deleteAll(self):
-        pass
+        self.pharmacies = []
 
-    def find(self, pharmacy):
-        pass
+
+    def find(self, pharmacy_name):
+        for pharmacy in self.pharmacies:
+            if pharmacy.name == pharmacy_name:
+                return pharmacy
+        return None
+
 
     def set_up_ddbb(self):
-        self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
+        # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
+        pharmacy1 = Pharmacy(name='Pharmacy 1', latitude=37.198366, longitude=-3.624976)
+        pharmacy2 = Pharmacy(name='Pharmacy 2', latitude=37.195993, longitude=-3.622784)
+
+        self.pharmacies.append( pharmacy1 )
+        self.pharmacies.append( pharmacy2 )
