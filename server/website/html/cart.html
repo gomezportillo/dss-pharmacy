@@ -62,7 +62,21 @@
           <!--Products will be here-->
         </tbody>
       </table>
+      <p class="less-bigger" id="total-price"></p>
+      <hr>
+      <div class="form-group">
+        <button type="submit" class="btn btn-danger delete-cart">
+          <span class="glyphicon glyphicon-trash"></span> Empty cart
+        </button>
 
+        <button type="submit" class="btn btn-primary">
+          <span class="glyphicon glyphicon-tag" id="reserve-cart"></span> Reserve products
+        </button>
+
+        <button type="submit" class="btn btn-success">
+          <span class="glyphicon glyphicon-euro" id="buy-cart"></span> Buy products
+        </button>
+      </div>
     </div>
   </div>
 </body>
@@ -92,6 +106,7 @@ function GET_cart()
     dataType: 'json',
     success: function (products)
     {
+      var total_price = 0;
       $.each(products, function (key, value) {
         var new_row = '<tr><td>' + value.name + '</td>'+
         '<td>'+ value.description + '</td>'+
@@ -100,7 +115,10 @@ function GET_cart()
         '<td>'+ value.quantity + '</td>';
 
         jQuery("#table-cart > tbody:last-child").append(new_row);
+
+        total_price += value.price * value.quantity;
       });
+      $("#total-price").html("<b>Total price:</b> " + total_price + "€");
     },
     error: function (request, message, error)
     {
@@ -108,5 +126,22 @@ function GET_cart()
     }
   });
 }
+
+$(document).on('click', '.delete-cart', function ()
+{
+  console.log("holi")
+  $.ajax({
+    url: CART_REST_URL + '/all',
+    type: 'DELETE',
+    success: function ()
+    {
+      location.reload();
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing DELETE on " + CART_REST_URL);
+    }
+  });
+});
 </script>
 </html>

@@ -76,6 +76,14 @@ def DELETE_product(resource):
     return resp
 
 
+@app.route('/rest/<string:resource>/all', methods=['DELETE'])
+def DELETE_all(resource):
+    daos[resource].deleteAll()
+    resp = jsonify({'status': '201'})
+    resp.status_code = 201
+    return resp
+
+
 @app.errorhandler(404)
 def not_found(error=None):
     return send_from_directory(html_dir, '404.html')
