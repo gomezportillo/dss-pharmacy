@@ -63,20 +63,33 @@
           <!--Products will be here-->
         </tbody>
       </table>
+
       <p class="less-bigger" id="total-price"></p>
       <hr>
-      <div class="form-group">
-        <button type="submit" class="btn btn-danger delete-cart">
-          <span class="glyphicon glyphicon-trash"></span> Empty cart
-        </button>
 
-        <button type="submit" class="btn btn-primary reserve-cart">
-          <span class="glyphicon glyphicon-tag"></span> Reserve products
-        </button>
+      <div class="row">
+        <div class="col-md-6">
+          <b>Email:</b><input name="email" id="email" type="email" class="form-control" placeholder="Enter a registered email for reserve or purchase your cart" />
+        </div>
+      </div>
 
-        <button type="submit" class="btn btn-success buy-cart">
-          <span class="glyphicon glyphicon-euro"></span> Buy products
-        </button>
+      <div class="row">
+        <br>
+        <div class="col-md-6">
+          <div class="form-group">
+            <button type="submit" class="btn btn-danger delete-cart">
+              <span class="glyphicon glyphicon-trash"></span> Empty cart
+            </button>
+
+            <button type="submit" class="btn btn-primary reserve-cart">
+              <span class="glyphicon glyphicon-tag"></span> Reserve products
+            </button>
+
+            <button type="submit" class="btn btn-success buy-cart">
+              <span class="glyphicon glyphicon-euro"></span> Buy products
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -112,7 +125,7 @@ function GET_cart()
       $.each(products, function (key, value) {
         var new_row = '<tr><td>' + value.name + '</td>'+
         '<td>'+ value.description + '</td>'+
-        '<td>'+ value.price + '</td>' +
+        '<td>'+ value.price    + '</td>' +
         '<td>'+ value.pharmacy + '</td>'+
         '<td>'+ value.quantity + '</td>';
 
@@ -147,19 +160,54 @@ $(document).on('click', '.delete-cart', function ()
 
 $(document).on('click', '.reserve-cart', function ()
 {
-  $.ajax({
-    url: ORDERS_REST_URL,
-    type: 'POST',
-    data: {'email':'email@placeholder', 'type':'Reserve'},
-    success: function ()
-    {
-      location.reload();
-    },
-    error: function (request, message, error)
-    {
-      console.log("Error performing POST on " + ORDERS_REST_URL);
-    }
-  });
+  var email = $('input[name=email]').val();
+  if (email)
+  {
+    $.ajax({
+      url: ORDERS_REST_URL,
+      type: 'POST',
+      data: {'email': email, 'type':'Reserve'},
+      success: function ()
+      {
+        alert("Products reserved correctly!")
+        location.reload();
+      },
+      error: function (request, message, error)
+      {
+        console.log("Error performing POST on " + ORDERS_REST_URL);
+      }
+    });
+  }
+  else
+  {
+    alert("Email cannot be empty")
+  }
+});
+
+$(document).on('click', '.buy-cart', function ()
+{
+  var email = $('input[name=email]').val();
+  if (email)
+  {
+    $.ajax({
+      url: ORDERS_REST_URL,
+      type: 'POST',
+      data: {'email': email, 'type':'Purchase'},
+      success: function ()
+      {
+        alert("Products purchased correctly!")
+        location.reload();
+      },
+      error: function (request, message, error)
+      {
+        console.log("Error performing POST on " + ORDERS_REST_URL);
+      }
+    });
+  }
+  else
+  {
+    alert("Email cannot be empty")
+  }
 });
 </script>
 </html>
