@@ -16,7 +16,7 @@ class DAOProduct:
 
 
     def insert(self, product):
-        if self.find(product.name) is None:
+        if self.find( product.name ) is None:
             self.products.append( product )
         else:
             self.update(product)
@@ -25,8 +25,8 @@ class DAOProduct:
     def update(self, new_product):
         for product in self.products:
             if product.name == new_product.name:
-                self.products.remove(product)
-                self.products.append(new_product)
+                self.products.remove( product )
+                self.products.append( new_product )
 
 
     def readAll(self):
@@ -36,7 +36,7 @@ class DAOProduct:
     def delete(self, name):
         for product in self.products:
             if product.name == name:
-                self.products.remove(product)
+                self.products.remove( product )
 
 
     def deleteAll(self):

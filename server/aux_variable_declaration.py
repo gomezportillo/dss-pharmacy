@@ -30,10 +30,10 @@ MONGODB_URI = 'mongodb://user:user123@ds123584.mlab.com:23584/pharmacy'
 
 # DAOs
 daos = {}
-daos['products']   = DAOProduct(MONGODB_URI)
-daos['users']      = DAOUser(MONGODB_URI)
-daos['pharmacies'] = DAOPharmacy(MONGODB_URI)
-daos['orders']     = DAOOrder(MONGODB_URI)
+daos['products']   = DAOProduct( MONGODB_URI )
+daos['users']      = DAOUser( MONGODB_URI )
+daos['pharmacies'] = DAOPharmacy( MONGODB_URI )
+daos['orders']     = DAOOrder( MONGODB_URI )
 daos['cart']       = DAOCart()
 
 

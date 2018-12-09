@@ -30,7 +30,7 @@ class DAOCart:
     def delete(self, product_name):
         for product in self.shopping_cart:
             if product.name == product_name:
-                self.shopping_cart.remove(product)
+                self.shopping_cart.remove( product )
 
 
     def deleteAll(self):

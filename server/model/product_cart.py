@@ -8,6 +8,7 @@ class ProductCart(Product):
         super().__init__(name, description, pharmacy, price, dict)
         self.quantity = 1
 
+
     def toJSON(self):
         json_msg = super().toJSON()
         json_msg['quantity'] = self.quantity
