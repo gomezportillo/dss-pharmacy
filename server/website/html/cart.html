@@ -167,8 +167,9 @@ $(document).on('click', '.reserve-cart', function ()
       url: ORDERS_REST_URL,
       type: 'POST',
       data: {'email': email, 'type':'Reserve'},
-      success: function ()
+      success: function (response)
       {
+        console.log( response )
         alert("Products reserved correctly!")
         location.reload();
       },
@@ -193,10 +194,17 @@ $(document).on('click', '.buy-cart', function ()
       url: ORDERS_REST_URL,
       type: 'POST',
       data: {'email': email, 'type':'Purchase'},
-      success: function ()
+      success: function (response)
       {
-        alert("Products purchased correctly!")
-        location.reload();
+        if ( response.status == 404)
+        {
+          alert( "⚠️ " + response.message + " ⚠️\nPlease introduce a valid email.");
+        }
+        else
+        {
+          alert("Products purchased correctly!")
+          location.reload();
+        }
       },
       error: function (request, message, error)
       {

@@ -52,7 +52,7 @@ class DAOUser:
 
     def set_up_ddbb(self):
         # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
-        user1 = User('admin', 'Administrator Smith', 'admin')
+        user1 = User('admin', 'Administrator', 'admin')
         user2 = User('gomezportillo@dss.com', 'Pedro Manuel Gómez-Portillo', 1234)
         user3 = User('xenahort@dss.com', 'Juan Carlos Serrano', 'secretpassword')
 

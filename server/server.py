@@ -69,16 +69,22 @@ def DELETE_product(resource):
 # Overrides the generic template method
 @app.route('/rest/orders', methods=['POST', 'PUT'])
 def POST_order():
-    # TODO comprobar si el email existe en la lista de usuarios
     email = request.form.to_dict()['email']
     type = request.form.to_dict()['type']
     cart  = daos['cart'].readAll()
 
-    order = Order(email, type, cart)
-    daos['orders'].insert( order )
-    daos['cart'].deleteAll()
+    user = daos['users'].find( email )
+    if user is not None:
+        order = Order(email, type, cart)
+        daos['orders'].insert( order )
+        daos['cart'].deleteAll()
 
-    resp = jsonify({'status': '201'})
+        resp = jsonify({'status': '201'})
+    else:
+        # Using 404 to warn that a user does not exist
+        # https://stackoverflow.com/questions/5604816/whats-the-most-appropriate-http-status-code-for-an-item-not-found-error-page
+        resp = jsonify({'status': '404', 'message': 'User with email ' + email + ' not found.'})
+
     resp.status_code = 201
     return resp
 
