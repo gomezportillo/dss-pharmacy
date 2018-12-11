@@ -1,7 +1,7 @@
 
 class Order:
 
-    def __init__(self, user, type, cart):
+    def __init__(self, user='email@dss', type='Purchase', cart={}):
         self.user = user
         self.type = type
         self.cart = cart
