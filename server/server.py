@@ -11,16 +11,6 @@ from aux_variable_declaration import *
 app = Flask(__name__)
 
 
-@app.route('/css/main.css', methods=['GET'])
-def get_css():
-    return send_from_directory(css_dir, 'main.css')
-
-
-@app.route('/', methods=['GET'])
-def get_html_index():
-    return send_from_directory(html_dir, 'index.html')
-
-
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(img_dir, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
@@ -31,9 +21,20 @@ def get_logo():
     return send_from_directory(img_dir, 'logo.jpg')
 
 
+@app.route('/css/main.css', methods=['GET'])
+def get_css():
+    return send_from_directory(css_dir, 'main.css')
+
+
+@app.route('/', methods=['GET'])
+def get_html_index():
+    return send_from_directory(html_dir, 'index.html')
+
+
 @app.route('/<string:path>', methods=['GET'])
-def get_html_products(path):
-    return send_from_directory(html_dir, path + '.html')
+def get_html_page(path):
+    html_file =  path + '.html'
+    return send_from_directory(html_dir, html_file)
 
 
 @app.route('/rest/status', methods=['GET'])
@@ -41,17 +42,6 @@ def get_status():
     resp = jsonify( server_info )
     resp.status_code = 200
     return resp
-
-
-@app.route('/rest/<string:resource>/all', methods=['GET'])
-def GET_ALL_resources(resource):
-    if resource in daos:
-        result = daos[resource].readAll()
-        resp = jsonify(result)
-        resp.status_code = 200
-        return resp
-    else:
-        abort(404)
 
 
 @app.route('/rest/<string:resource>', methods=['POST', 'PUT'])
@@ -65,6 +55,15 @@ def POST_resource(resource):
         return resp
     else:
         abort(404)
+
+
+@app.route('/rest/<string:resource>', methods=['DELETE'])
+def DELETE_product(resource):
+    name = request.form.to_dict()['name']
+    daos[resource].delete(name)
+    resp = jsonify({'status': '201'})
+    resp.status_code = 201
+    return resp
 
 
 @app.route('/rest/orders', methods=['POST', 'PUT'])
@@ -82,13 +81,16 @@ def POST_order():
     resp.status_code = 201
     return resp
 
-@app.route('/rest/<string:resource>', methods=['DELETE'])
-def DELETE_product(resource):
-    name = request.form.to_dict()['name']
-    daos[resource].delete(name)
-    resp = jsonify({'status': '201'})
-    resp.status_code = 201
-    return resp
+
+@app.route('/rest/<string:resource>/all', methods=['GET'])
+def GET_ALL_resources(resource):
+    if resource in daos:
+        result = daos[resource].readAll()
+        resp = jsonify(result)
+        resp.status_code = 200
+        return resp
+    else:
+        abort(404)
 
 
 @app.route('/rest/<string:resource>/all', methods=['DELETE'])
