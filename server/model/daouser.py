@@ -1,17 +1,10 @@
-import pymongo
-
 from model.user import User
 from model.interfacedao import InterfaceDAO
 
-PRIMARY_KEY = 'email'
-COLLECTION_NAME = 'users'
 
 class DAOUser(InterfaceDAO):
 
-    def __init__(self, MONGODB_URI):
-        self.mongo_client = pymongo.MongoClient(MONGODB_URI)
-        self.apolo_ddbb = self.mongo_client.get_database()
-        self.collection = self.apolo_ddbb[COLLECTION_NAME]
+    def __init__(self):
         self.users = []
         self.set_up_ddbb()
 
@@ -52,7 +45,6 @@ class DAOUser(InterfaceDAO):
 
 
     def set_up_ddbb(self):
-        # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
         user1 = User('admin', 'Administrator', 'admin')
         user2 = User('gomezportillo@dss.com', 'Pedro Manuel Gómez-Portillo', 1234)
         user3 = User('xenahort@dss.com', 'Juan Carlos Serrano', 'secretpassword')

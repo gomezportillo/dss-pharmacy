@@ -1,17 +1,10 @@
-import pymongo
-
 from model.product import Product
 from model.interfacedao import InterfaceDAO
 
-PRIMARY_KEY = 'name'
-COLLECTION_NAME = 'products'
 
 class DAOProduct(InterfaceDAO):
 
-    def __init__(self, MONGODB_URI):
-        self.mongo_client = pymongo.MongoClient(MONGODB_URI)
-        self.apolo_ddbb = self.mongo_client.get_database()
-        self.collection = self.apolo_ddbb[COLLECTION_NAME]
+    def __init__(self):
         self.products = []
         self.set_up_ddbb()
 
@@ -52,7 +45,6 @@ class DAOProduct(InterfaceDAO):
 
 
     def set_up_ddbb(self):
-        # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
         product1 = Product('Ibuprofen', 'Cures headache', 'Pharmacy 1', 7)
         product2 = Product('Frenadol', 'Cures flu', 'Pharmacy 2', 12)
         product3 = Product('Bandage', 'Cures wounds', 'Pharmacy 1', 10)

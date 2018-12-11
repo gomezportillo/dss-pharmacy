@@ -1,9 +1,6 @@
-import pymongo
-
 from model.product_cart import ProductCart
 from model.interfacedao import InterfaceDAO
 
-PRIMARY_KEY = 'name'
 
 class DAOCart(InterfaceDAO):
 

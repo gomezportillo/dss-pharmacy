@@ -1,17 +1,10 @@
-import pymongo
-
 from model.pharmacy import Pharmacy
 from model.interfacedao import InterfaceDAO
 
-PRIMARY_KEY = 'name'
-COLLECTION_NAME = 'pharmacies'
 
 class DAOPharmacy(InterfaceDAO):
 
-    def __init__(self, MONGODB_URI):
-        self.mongo_client = pymongo.MongoClient(MONGODB_URI)
-        self.apolo_ddbb = self.mongo_client.get_database()
-        self.collection = self.apolo_ddbb[COLLECTION_NAME]
+    def __init__(self):
         self.pharmacies = []
         self.set_up_ddbb()
 
@@ -52,7 +45,6 @@ class DAOPharmacy(InterfaceDAO):
 
 
     def set_up_ddbb(self):
-        # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
         pharmacy1 = Pharmacy(name='Pharmacy 1', latitude=37.198366, longitude=-3.624976)
         pharmacy2 = Pharmacy(name='Pharmacy 2', latitude=37.195993, longitude=-3.622784)
 

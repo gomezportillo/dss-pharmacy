@@ -20,21 +20,18 @@ from model.product_cart import ProductCart
 # Metadata
 VERSION = 0.7
 server_info = {}
-server_info['version'] = VERSION
-server_info['server_dev'] = 'Pedro Manuel Gómez-Portillo'
+server_info['version']     = VERSION
+server_info['server_dev']  = 'Pedro Manuel Gómez-Portillo'
 server_info['android_dev'] = 'Juan Carlos Serrano'
-server_info['repository'] = 'https://github.com/gomezportillo/dss-pharmacy'
-
-# MongoDB URI
-MONGODB_URI = 'mongodb://user:user123@ds123584.mlab.com:23584/pharmacy'
+server_info['repository']  = 'https://github.com/gomezportillo/dss-pharmacy'
 
 
 # DAOs
 daos = {}
-daos['products']   = DAOProduct( MONGODB_URI )
-daos['users']      = DAOUser( MONGODB_URI )
-daos['pharmacies'] = DAOPharmacy( MONGODB_URI )
-daos['orders']     = DAOOrder( MONGODB_URI )
+daos['products']   = DAOProduct( )
+daos['users']      = DAOUser( )
+daos['pharmacies'] = DAOPharmacy( )
+daos['orders']     = DAOOrder( )
 daos['cart']       = DAOCart()
 
 
@@ -46,6 +43,8 @@ constructors['pharmacies'] = Pharmacy
 constructors['orders']     = Order
 constructors['cart']       = ProductCart
 
+
+# HTML file directories
 html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'html')
 css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')
 img_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'img')

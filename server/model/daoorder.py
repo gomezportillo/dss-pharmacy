@@ -1,17 +1,10 @@
-import pymongo
-
 from model import order
 from model.interfacedao import InterfaceDAO
 
-PRIMARY_KEY = 'id'
-COLLECTION_NAME = 'orders'
 
 class DAOOrder(InterfaceDAO):
 
-    def __init__(self, MONGODB_URI):
-        self.mongo_client = pymongo.MongoClient(MONGODB_URI)
-        self.apolo_ddbb = self.mongo_client.get_database()
-        self.collection = self.apolo_ddbb[COLLECTION_NAME]
+    def __init__(self):
         self.set_up_ddbb()
 
 
@@ -40,5 +33,4 @@ class DAOOrder(InterfaceDAO):
 
 
     def set_up_ddbb(self):
-        # self.collection.create_index([(PRIMARY_KEY, pymongo.ASCENDING)], unique=True)
         self.orders = []
