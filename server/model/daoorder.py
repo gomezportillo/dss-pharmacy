@@ -1,7 +1,9 @@
 from model import order
 from model.interfacedao import InterfaceDAO
+from model.singleton import Singleton
 
 
+@Singleton
 class DAOOrder(InterfaceDAO):
 
     def __init__(self):

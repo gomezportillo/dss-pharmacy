@@ -1,7 +1,9 @@
 from model.product_cart import ProductCart
 from model.interfacedao import InterfaceDAO
+from model.singleton import Singleton
 
 
+@Singleton
 class DAOCart(InterfaceDAO):
 
     def __init__(self):

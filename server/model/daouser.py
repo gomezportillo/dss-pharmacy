@@ -1,7 +1,9 @@
 from model.user import User
 from model.interfacedao import InterfaceDAO
+from model.singleton import Singleton
 
 
+@Singleton
 class DAOUser(InterfaceDAO):
 
     def __init__(self):

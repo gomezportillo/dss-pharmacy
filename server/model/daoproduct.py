@@ -1,7 +1,9 @@
 from model.product import Product
 from model.interfacedao import InterfaceDAO
+from model.singleton import Singleton
 
 
+@Singleton
 class DAOProduct(InterfaceDAO):
 
     def __init__(self):

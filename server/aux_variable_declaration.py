@@ -28,11 +28,11 @@ server_info['repository']  = 'https://github.com/gomezportillo/dss-pharmacy'
 
 # DAOs
 daos = {}
-daos['products']   = DAOProduct( )
-daos['users']      = DAOUser( )
-daos['pharmacies'] = DAOPharmacy( )
-daos['orders']     = DAOOrder( )
-daos['cart']       = DAOCart()
+daos['products']   = DAOProduct.instance()
+daos['users']      = DAOUser.instance()
+daos['pharmacies'] = DAOPharmacy.instance()
+daos['orders']     = DAOOrder.instance()
+daos['cart']       = DAOCart.instance()
 
 
 # Constructors

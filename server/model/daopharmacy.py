@@ -1,7 +1,9 @@
 from model.pharmacy import Pharmacy
 from model.interfacedao import InterfaceDAO
+from model.singleton import Singleton
 
 
+@Singleton
 class DAOPharmacy(InterfaceDAO):
 
     def __init__(self):
