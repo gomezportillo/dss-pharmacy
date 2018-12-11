@@ -49,9 +49,84 @@
     <div class="col-md-12">
       <br><br><br><br>
       <h1>Orders</h1>
+
       <hr>
 
+      <div class="tab-content">
+        <br>
+        <div id="see-products-tab" class="tab-pane fade in active">
+          <table class="table table-hover" id="table-products">
+            <thead>
+              <th>Client email</th>
+              <th>Type</th>
+              <th>List of products</th>
+              <th>Total price</th>
+            </thead>
+            <tbody>
+              <!-- Orders will be placed here -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
   </div>
 </body>
+
+<script>
+$( document ).ready(function()
+{
+  GET_orders();
+});
+
+var debug = false;
+if ( debug )
+{
+  var ORDERS_REST_URL = "http://localhost:5000/rest/orders";
+}
+else
+{
+  var ORDERS_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/orders";
+}
+
+function GET_orders()
+{
+  $.ajax({
+    url: ORDERS_REST_URL + '/all',
+    type: 'GET',
+    dataType: 'json',
+    success: function (orders)
+    {
+      console.log(orders);
+      $.each(orders, function (key, value)
+      {
+        var new_row = '<tr><td>' + value.email + '</td>'+
+        '<td>'+ value.type + '</td>';
+
+        var all_products = '';
+        var total_price = 0;
+        $.each(value.products, function (key_p, value_p)
+        {
+          all_products += '<b>' + value_p.name + '</b>'
+          all_products += ' (' + value_p.description + ').'
+          all_products += ' Sold in ' + value_p.pharmacy + '.';
+          all_products += ' Price: ' + value_p.price + '€ '
+          all_products += ' x ' + value_p.quantity + 'units<br>';
+
+          total_price += value_p.price * value_p.quantity;
+        });
+
+        new_row += '<td>' + all_products + '</td>';
+        new_row += '<td>' + total_price + ' €</td></tr>';
+        console.log(new_row)
+        jQuery("#table-products > tbody:last-child").append(new_row);
+      });
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing GET on " + SERVER_REST_URL);
+    }
+  });
+}
+</script>
 </html>
