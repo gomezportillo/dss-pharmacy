@@ -15,28 +15,39 @@ class DAOUser:
         self.set_up_ddbb()
 
 
-    def insert(self, product):
-        pass
+    def insert(self, user):
+        if self.find( user.email ) is None:
+            self.users.append( user )
+        else:
+            self.update(user)
 
 
-    def update(self, product):
-        pass
+    def update(self, new_user):
+        for user in self.users:
+            if user.email == new_user.email:
+                self.users.remove( user )
+                self.users.append( new_user )
 
 
     def readAll(self):
         return [ user.toJSON() for user in self.users ]
 
 
-    def delete(self, product):
-        pass
+    def delete(self, email):
+        for user in self.users:
+            if user.email == email:
+                self.users.remove( user )
 
 
     def deleteAll(self):
-        pass
+        self.users = []
 
 
-    def find(self, product):
-        pass
+    def find(self, email):
+        for user in self.users:
+            if user.email == email:
+                return user
+        return None
 
 
     def set_up_ddbb(self):

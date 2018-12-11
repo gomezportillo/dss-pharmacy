@@ -49,9 +49,140 @@
     <div class="col-md-12">
       <br><br><br><br>
       <h1>Users</h1>
+
       <hr>
 
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#see-users-tab">
+          <span class="glyphicon glyphicon-list-alt"></span> See users</a>
+        </li>
+
+        <li><a data-toggle="tab" href="#add-user-tab">
+          <span class="glyphicon glyphicon-plus"></span> Add user</a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <br>
+        <div id="see-users-tab" class="tab-pane fade in active">
+          <table class="table table-hover" id="table-users">
+            <thead>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Password</th>
+              <th>Delete</th>
+            </thead>
+            <tbody>
+              <!--Users will be here-->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="add-user-tab" class="tab-pane fade">
+          <form id="add-user-form">
+            <div class="form-group">
+              <label for="id">Email</label>
+              <input name="email" type="text" class="form-control" placeholder="Enter email" />
+            </div>
+
+            <div class="form-group">
+              <label for="id">Name</label>
+              <input name="name" type="text" class="form-control" placeholder="Enter name" />
+            </div>
+
+            <div class="form-group">
+              <label for="id">Password</label>
+              <input name="password" type="text" class="form-control" placeholder="Enter password" />
+            </div>
+
+            <div class="form-group">
+              <input value="Create user" type="submit" class="btn btn-primary" />
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </body>
+<script>
+$( document ).ready(function()
+{
+  GET_users();
+});
+
+var debug = false;
+if ( debug )
+{
+  var USERS_REST_URL = "http://localhost:5000/rest/users";
+}
+else
+{
+  var USERS_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/users";
+}
+
+function GET_users()
+{
+  $.ajax({
+    url: USERS_REST_URL + '/all',
+    type: 'GET',
+    dataType: 'json',
+    success: function (users)
+    {
+      console.log(users);
+      $.each(users, function (key, value)
+      {
+        var new_row = '<tr><td>' + value.email + '</td>'+
+        '<td>'+ value.name + '</td>'+
+        '<td>'+ value.password + '</td>'+
+
+        // Delete button
+        '<td><button class="btn btn-danger col-md-5 delete-user-btn" id="' + value.email + '" type="button"><span class="glyphicon glyphicon-trash"></span></button></td>' +
+        '</tr>';
+        jQuery("#table-users > tbody:last-child").append(new_row);
+      });
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing GET on " + USERS_REST_URL);
+    }
+  });
+}
+
+$(document).on('click', '.delete-user-btn', function ()
+{
+  $.ajax({
+    url: USERS_REST_URL,
+    type: 'DELETE',
+    data: {'name':$(this).attr('id')},
+    success: function ()
+    {
+      location.reload();
+    },
+    error: function (request, message, error)
+    {
+      console.log("Error performing DELETE on " + USERS_REST_URL);
+    }
+  });
+});
+
+$(function POST_user()
+{
+  $('#add-user-form').submit(function() {
+    $.ajax({
+      url: USERS_REST_URL,
+      type: 'POST',
+      data: $('#add-user-form').serialize(),
+      success: function ()
+      {
+        location.reload();
+      },
+      error: function (request, message, error)
+      {
+        console.log("Error performing POST on " + USERS_REST_URL);
+      }
+    });
+    return false;
+  });
+})
+</script>
 </html>

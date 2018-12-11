@@ -55,7 +55,7 @@
       <div class="tab-content">
         <br>
         <div id="see-products-tab" class="tab-pane fade in active">
-          <table class="table table-hover" id="table-products">
+          <table class="table table-hover" id="table-orders">
             <thead>
               <th>Client email</th>
               <th>Type</th>
@@ -121,7 +121,7 @@ function GET_orders()
 
         new_row += '<td>' + all_products + '</td>';
         new_row += '<td>' + total_price + ' €</td></tr>';
-        jQuery("#table-products > tbody:last-child").append(new_row);
+        jQuery("#table-orders > tbody:last-child").append(new_row);
       });
     },
     error: function (request, message, error)

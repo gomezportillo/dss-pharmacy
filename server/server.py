@@ -66,6 +66,7 @@ def DELETE_product(resource):
     return resp
 
 
+# Overrides the generic template method
 @app.route('/rest/orders', methods=['POST', 'PUT'])
 def POST_order():
     # TODO comprobar si el email existe en la lista de usuarios

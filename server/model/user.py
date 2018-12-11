@@ -8,12 +8,14 @@ class User:
             self.password = password
         else:
             self.email    = dict['email']
-            self.name     = float( dict['name'] )
-            self.password = float( dict['password'] )
+            self.name     = dict['name']
+            self.password = dict['password']
+
 
     def toJSON(self):
         # return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
         return {'email' : self.email, 'name' : self.name, 'password' : self.password}
 
-    def assertPassword(self, password):
+
+    def checkPassword(self, password):
         return self.password == password

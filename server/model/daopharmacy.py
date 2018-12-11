@@ -21,11 +21,13 @@ class DAOPharmacy:
         else:
             self.update( new_pharmacy )
 
+
     def update(self, new_pharmacy):
         for pharmacy in self.pharmacies:
             if pharmacy.name == new_pharmacy.name:
                 self.pharmacies.remove( pharmacy )
                 self.pharmacies.append( new_pharmacy )
+
 
     def readAll(self):
         return [ pharmacy.toJSON() for pharmacy in self.pharmacies ]
