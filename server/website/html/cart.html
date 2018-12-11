@@ -169,9 +169,19 @@ $(document).on('click', '.reserve-cart', function ()
       data: {'email': email, 'type':'Reserve'},
       success: function (response)
       {
-        console.log( response )
-        alert("Products reserved correctly!")
-        location.reload();
+        if ( response.status == 404 ) // user not found
+        {
+          alert( "⚠️ " + response.message + " ⚠️");
+        }
+        else if ( response.status == 409 ) // cart empty
+        {
+          alert( "⚠️ " + response.message + " ⚠️\n");
+        }
+        else
+        {
+          alert("Products reserved correctly!")
+          location.reload();
+        }
       },
       error: function (request, message, error)
       {
@@ -196,9 +206,13 @@ $(document).on('click', '.buy-cart', function ()
       data: {'email': email, 'type':'Purchase'},
       success: function (response)
       {
-        if ( response.status == 404)
+        if ( response.status == 404 ) // user not found
         {
-          alert( "⚠️ " + response.message + " ⚠️\nPlease introduce a valid email.");
+          alert( "⚠️ " + response.message + " ⚠️");
+        }
+        else if ( response.status == 409 ) // cart empty
+        {
+          alert( "⚠️ " + response.message + " ⚠️\n");
         }
         else
         {
