@@ -98,8 +98,10 @@
               </div>
 
               <div class="form-group">
-                <label for="id">Pharmacy where is sold</label>
-                <input name="pharmacy" type="text" class="form-control" value="Pharmacy 3" placeholder="Enter pharmacy where it belongs" />
+                <label for="pharmacies-dropdown">Pharmacy where is sold</label>
+                <select id="pharmacies-dropdown" class="form-control">
+                  <!-- Here will be placed the list of pharmacies -->
+                </select>
               </div>
 
               <div class="form-group">
@@ -117,6 +119,7 @@
 $( document ).ready(function()
 {
   GET_products();
+  GET_pharmacies();
 });
 
 var debug = false;
@@ -124,11 +127,13 @@ if ( debug )
 {
   var PRODUCT_REST_URL = "http://localhost:5000/rest/products";
   var CART_REST_URL = "http://localhost:5000/rest/cart";
+  var PHARMACIES_REST_URL = "http://localhost:5000/rest/pharmacies";
 }
 else
 {
   var PRODUCT_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/products";
   var CART_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/cart";
+  var PHARMACIES_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/pharmacies";
 }
 
 // REF. https://api.jquery.com/jquery.get/
@@ -141,7 +146,8 @@ function GET_products()
     success: function (products)
     {
       console.log( products );
-      $.each(products, function (key, value) {
+      $.each(products, function (key, value)
+      {
         var new_row = '<tr><td>' + value.name + '</td>'+
         '<td>'+ value.description + '</td>'+
         '<td>'+ value.price + '</td>' +
@@ -159,6 +165,25 @@ function GET_products()
     error: function (request, message, error)
     {
       console.log("Error performing GET on " + PRODUCT_REST_URL);
+    }
+  });
+}
+
+function GET_pharmacies()
+{
+  var $dropdown = $("#pharmacies-dropdown");
+
+  $.ajax({
+    url: PHARMACIES_REST_URL + '/all',
+    type: 'GET',
+    dataType: 'json',
+    success: function (pharmacies)
+    {
+      console.log( pharmacies );
+      $.each(pharmacies, function (key, value)
+      {
+        $dropdown.append($("<option />").val(value.name).text(value.name));
+      });
     }
   });
 }
