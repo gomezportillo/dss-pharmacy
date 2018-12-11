@@ -1,11 +1,12 @@
 import pymongo
 
 from model import order
+from model.interfacedao import InterfaceDAO
 
 PRIMARY_KEY = 'id'
 COLLECTION_NAME = 'orders'
 
-class DAOOrder:
+class DAOOrder(InterfaceDAO):
 
     def __init__(self, MONGODB_URI):
         self.mongo_client = pymongo.MongoClient(MONGODB_URI)

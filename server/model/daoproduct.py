@@ -1,11 +1,12 @@
 import pymongo
 
 from model.product import Product
+from model.interfacedao import InterfaceDAO
 
 PRIMARY_KEY = 'name'
 COLLECTION_NAME = 'products'
 
-class DAOProduct:
+class DAOProduct(InterfaceDAO):
 
     def __init__(self, MONGODB_URI):
         self.mongo_client = pymongo.MongoClient(MONGODB_URI)

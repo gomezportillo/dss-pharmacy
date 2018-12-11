@@ -1,11 +1,12 @@
 import pymongo
 
 from model.user import User
+from model.interfacedao import InterfaceDAO
 
 PRIMARY_KEY = 'email'
 COLLECTION_NAME = 'users'
 
-class DAOUser:
+class DAOUser(InterfaceDAO):
 
     def __init__(self, MONGODB_URI):
         self.mongo_client = pymongo.MongoClient(MONGODB_URI)

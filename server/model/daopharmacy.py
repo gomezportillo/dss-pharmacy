@@ -1,11 +1,12 @@
 import pymongo
 
 from model.pharmacy import Pharmacy
+from model.interfacedao import InterfaceDAO
 
 PRIMARY_KEY = 'name'
 COLLECTION_NAME = 'pharmacies'
 
-class DAOPharmacy:
+class DAOPharmacy(InterfaceDAO):
 
     def __init__(self, MONGODB_URI):
         self.mongo_client = pymongo.MongoClient(MONGODB_URI)
