@@ -103,22 +103,24 @@ function GET_orders()
         var new_row = '<tr><td>' + value.email + '</td>'+
         '<td>'+ value.type + '</td>';
 
-        var all_products = '';
         var total_price = 0;
+        var all_products = '<ul>';
         $.each(value.products, function (key_p, value_p)
         {
+          all_products += '<li>'
           all_products += '<b>' + value_p.name + '</b>'
           all_products += ' (' + value_p.description + ').'
           all_products += ' Sold in ' + value_p.pharmacy + '.';
           all_products += ' Price: ' + value_p.price + '€ '
-          all_products += ' x ' + value_p.quantity + 'units<br>';
+          all_products += ' x ' + value_p.quantity + ' units';
+          all_products += '</li>'
 
           total_price += value_p.price * value_p.quantity;
         });
+        all_products += '</ul>';
 
         new_row += '<td>' + all_products + '</td>';
         new_row += '<td>' + total_price + ' €</td></tr>';
-        console.log(new_row)
         jQuery("#table-products > tbody:last-child").append(new_row);
       });
     },
