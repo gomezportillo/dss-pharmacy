@@ -1,5 +1,3 @@
-import json
-
 from model.product import Product
 
 class ProductCart(Product):

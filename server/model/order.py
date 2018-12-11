@@ -8,7 +8,6 @@ class Order:
 
 
     def toJSON(self):
-        # return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
         json_msg             = {}
         json_msg['email']    = self.user
         json_msg['type']     = self.type

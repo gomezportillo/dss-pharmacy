@@ -1,4 +1,3 @@
-import json
 
 class Pharmacy:
 
@@ -14,5 +13,4 @@ class Pharmacy:
 
 
     def toJSON(self):
-        # return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
         return {'name':self.name,'latitude':self.latitude,'longitude':self.longitude}
