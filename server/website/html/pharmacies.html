@@ -121,17 +121,17 @@
   var debug = false;
   if ( debug )
   {
-    var SERVER_REST_URL = "http://localhost:5000/rest/pharmacies";
+    var PHARMACIES_REST_URL = "http://localhost:5000/rest/pharmacies";
   }
   else
   {
-    var SERVER_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/pharmacies";
+    var PHARMACIES_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/pharmacies";
   }
 
   function load_pharmacies_and_create_markers()
   {
     $.ajax({
-      url: SERVER_REST_URL + '/all',
+      url: PHARMACIES_REST_URL + '/all',
       type: 'GET',
       dataType: 'json',
       success: function (pharmacies)
@@ -155,7 +155,7 @@
       },
       error: function (request, message, error)
       {
-        console.log("Error performing GET on " + SERVER_REST_URL);
+        console.log("Error performing GET on " + PHARMACIES_REST_URL);
       }
     });
   }
@@ -165,7 +165,7 @@
     $('#add-pharmacy-form').submit(function()
     {
       $.ajax({
-        url: SERVER_REST_URL,
+        url: PHARMACIES_REST_URL,
         type: 'POST',
         data: $('#add-pharmacy-form').serialize(),
         success: function ()
@@ -174,7 +174,7 @@
         },
         error: function (request, message, error)
         {
-          console.log("Error performing POST on " + SERVER_REST_URL);
+          console.log("Error performing POST on " + PHARMACIES_REST_URL);
         }
       });
       return false;
@@ -184,7 +184,7 @@
   $(document).on('click', '.delete-pharmacy-btn', function ()
   {
     $.ajax({
-      url: SERVER_REST_URL,
+      url: PHARMACIES_REST_URL,
       type: 'DELETE',
       data: {'name':$(this).attr('id')},
       success: function ()
@@ -193,7 +193,7 @@
       },
       error: function (request, message, error)
       {
-        console.log("Error performing DELETE on " + SERVER_REST_URL);
+        console.log("Error performing DELETE on " + PHARMACIES_REST_URL);
       }
     });
   });
