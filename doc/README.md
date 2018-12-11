@@ -8,6 +8,8 @@
 	- [Pharmacies](#pharmacies)
 	- [Cart](#cart)
 	- [Order](#order)
+		- [Errors](#errors)
+	- [Users](#users)
 
 <!-- /TOC -->
 
@@ -101,7 +103,7 @@
 ]
 ```
 
-**POST** or **PUT** `/rest/cart` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product in the cart or add it +1 quantity if already exists one with the same name.
+**POST** or **PUT** `/rest/cart` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product in the cart with quantity **1** or add it **+1** quantity if already exists one with the same name.
 
 **DELETE** `/rest/cart/all` will delete the whole shopping cart.
 
@@ -150,4 +152,50 @@
 
 **POST** or **PUT** `/rest/order` indicating _email_ and _type_ will create a new order with the products that are currently on the cart (no need to specify them). The type of the order can be **Reserve** if it is a reserve or **Purchase** if the user has bought the products. No reestrictions regarding quantity or pharmacies are applied.
 
-⚠️TO DO⚠️
+### Errors
+
+* If the email of the user is not found in the system, the server will return a JSON message with code `404` as follows.
+
+```
+{  
+   "status" : "404",
+   "message" : "User with email $email not found."
+}
+```
+
+* If the cart is empty, the server will return a JSON message with the code `409` as follows.
+
+```
+{  
+   "status" : "409",
+   "message" : "Cart cannot be empty."
+}
+```
+
+## Users
+
+**GET** `/rest/users/all` will return the list of all users with the following format.
+
+```
+[  
+   {  
+      "email":"admin",
+      "name":"Administrator",
+      "password":"admin"
+   },
+   {  
+      "email":"gomezportillo@dss.com",
+      "name":"Pedro Manuel G\u00f3mez-Portillo",
+      "password":1234
+   },
+   {  
+      "email":"xenahort@dss.com",
+      "name":"Juan Carlos Serrano",
+      "password":"secretpassword"
+   }
+]
+```
+
+**POST** or **PUT** `/rest/users` indicating _email_, _name_ and _password_ will create a new users or override it if already exists one with the same email.
+
+**DELETE** `/rest/users` indicating the _email_ of the users to be deleted will delete it.
