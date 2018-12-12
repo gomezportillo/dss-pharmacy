@@ -18,7 +18,7 @@ from model.user import User
 from model.product_cart import ProductCart
 
 # Metadata
-VERSION = 0.7
+VERSION = 1.0
 server_info = {}
 server_info['version']     = VERSION
 server_info['server_dev']  = 'Pedro Manuel Gómez-Portillo'
