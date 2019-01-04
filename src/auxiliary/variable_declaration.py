@@ -46,6 +46,6 @@ constructors['cart']       = ProductCart
 
 
 # HTML file directories
-html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'html')
-css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'css')
-img_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'website', 'img')
+html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'html')
+css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'css')
+img_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'img')

@@ -4,7 +4,7 @@ from flask import jsonify
 from flask import request
 from flask import abort
 
-from aux_variable_declaration import *
+from auxiliary.variable_declaration import *
 
 
 # App definition
@@ -79,7 +79,7 @@ def POST_order():
 
     elif not cart:
         resp = jsonify({'status': '409', 'message': 'Cart cannot be empty.'})
-        
+
     else:
         order = Order(email, type, cart)
         daos['orders'].insert( order )
@@ -125,5 +125,5 @@ def not_allowed(error=None):
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    port = int(os.environ.get("PORT", 80))
+    app.run(host='0.0.0.0', port=port, debug=True)

@@ -22,7 +22,7 @@ If the server is down or you choose to deploy the project locally,
 * Locate on the root directory
 * Execute `pip3 install -r requirements.txt`
 * Execute `python3 server/server.py`
-* Go to `localhost:5000`
+* Go to `localhost:`
 
 ## Documentation
 
