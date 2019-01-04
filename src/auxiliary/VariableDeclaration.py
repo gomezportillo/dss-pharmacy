@@ -5,6 +5,7 @@ server in order to ease its readability and maintainability.
 
 import os
 import datetime
+import json
 
 from model.DAOUser import DAOUser
 from model.DAOPharmacy import DAOPharmacy
@@ -18,9 +19,20 @@ from model.Product import Product
 from model.User import User
 from model.ProductCart import ProductCart
 
+from flask import Flask
+from flask import send_from_directory
+from flask import jsonify
+from flask import request
+from flask import abort
+from flask import Response
+
+
+# Flask initialisation
+app = Flask(__name__)
+
 
 # Metadata
-VERSION = 1.1
+VERSION = 1.2
 server_info = {}
 server_info['version']     = VERSION
 server_info['server_dev']  = 'Pedro Manuel Gómez-Portillo'
@@ -47,6 +59,6 @@ constructors['cart']       = ProductCart
 
 
 # HTML file directories
-html_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'html')
-css_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'css')
-img_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'img')
+HTML_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'html')
+CSS_DIR  = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'css')
+IMG_DIR  = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'img')

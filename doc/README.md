@@ -22,7 +22,7 @@
   "version":0.7
   "repository":"https://github.com/gomezportillo/dss-pharmacy",
   "server_dev":"Pedro Manuel Gómez-Portillo",
-   "android_dev":"Juan Carlos Serrano",
+  "android_dev":"Juan Carlos Serrano",
 }
 ```
 
@@ -59,7 +59,7 @@
 
 ## Pharmacies
 
-**GET** `/rest/pharmacies/all` will return the list of registered pharmacies with the following structure.
+**GET** `/rest/pharmacies` will return the list of registered pharmacies with the following structure.
 
 ```
 [  
@@ -76,9 +76,11 @@
 ]
 ```
 
+**GET** `/rest/pharmacies/<name>` will return the pharmacy with that name.
+
 **POST** or **PUT** `/rest/pharmacies` indicating _name_, _latitude_ and _longitude_ will create a new pharmacy or override it if already exists one with the same name.
 
-**DELETE** `/rest/pharmacies` indicating the _name_ of the pharmacy will delete it.
+**DELETE** `/rest/pharmacies/<name>` will delete the pharmacy with that name.
 
 ## Cart
 

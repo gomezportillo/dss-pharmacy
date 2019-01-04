@@ -121,7 +121,7 @@
   var debug = true;
   if ( debug )
   {
-    var PHARMACIES_REST_URL = "http://localhost:/rest/pharmacies";
+    var PHARMACIES_REST_URL = "http://localhost/rest/pharmacies";
   }
   else
   {
@@ -131,7 +131,7 @@
   function load_pharmacies_and_create_markers()
   {
     $.ajax({
-      url: PHARMACIES_REST_URL + '/all',
+      url: PHARMACIES_REST_URL,
       type: 'GET',
       dataType: 'json',
       success: function (pharmacies)
@@ -183,10 +183,11 @@
 
   $(document).on('click', '.delete-pharmacy-btn', function ()
   {
+    var new_pharmacy = $(this).attr('id');
     $.ajax({
-      url: PHARMACIES_REST_URL,
+      url: PHARMACIES_REST_URL + '/' + new_pharmacy,
       type: 'DELETE',
-      data: {'name':$(this).attr('id')},
+      data: {},
       success: function ()
       {
         location.reload();
