@@ -115,7 +115,7 @@ else
 function GET_cart()
 {
   $.ajax({
-    url: CART_REST_URL + '/all',
+    url: CART_REST_URL,
     type: 'GET',
     dataType: 'json',
     success: function (products)
@@ -145,7 +145,7 @@ function GET_cart()
 $(document).on('click', '.delete-cart', function ()
 {
   $.ajax({
-    url: CART_REST_URL + '/all',
+    url: CART_REST_URL,
     type: 'DELETE',
     success: function ()
     {

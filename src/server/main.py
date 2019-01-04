@@ -414,49 +414,91 @@ def GET_order(email):
 
 
 """
-#############################################################################################
+CART
 """
-@app.route('/rest/<string:resource>', methods=['POST', 'PUT'])
-def POST_resource(resource):
-    if resource in daos and resource in constructors:
-        print('POST/PUT on ' + resource + ': ' + str(request.form.to_dict()))
-        resource_obj = constructors[resource](dict=request.form.to_dict())
-        daos[resource].insert(resource_obj)
-        resp = jsonify()
-        resp.status_code = 201
-        return resp
+"""
+This method will handle POST and PUT methods over cart
+"""
+@app.route('/rest/cart', methods=['POST', 'PUT'])
+def POST_cart():
+
+    product_dict = request.form.to_dict()
+    print('POST/PUT on CART: ' + str( product_dict ))
+    new_product = ProductCart(dict=product_dict)
+    DAOCart.instance().insert( new_product )
+
+    response = Response(json.dumps( {'status': '201'}, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+"""
+This method will handle the DELETE methods over cart using URIs
+"""
+@app.route('/rest/cart/<string:product>', methods=['DELETE'])
+def DELETE_cart(product):
+
+    print('DELETE on CART: ' + product)
+    DAOCart.instance().delete( product )
+
+    response = Response(json.dumps( {'status': '201'}, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+"""
+This method will delete the whole cart
+"""
+@app.route('/rest/cart', methods=['DELETE'])
+def DELETE_ALL_cart():
+
+    print('DELETE ALL on CART')
+    DAOCart.instance().deleteAll()
+
+    response = Response(json.dumps( {'status': '201'}, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+"""
+This method will return the current cart
+"""
+@app.route('/rest/cart', methods=['GET'])
+def GET_ALL_cart():
+
+    print('GET ALL on CART')
+    cart = DAOCart.instance().readAll()
+
+    response = Response(json.dumps( cart, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+
+    return response
+
+
+
+"""
+This method will handle the GET methods over cart using URIs
+"""
+@app.route('/rest/cart/<string:product>', methods=['GET'])
+def GET_cart(product):
+
+    print('GET on CART: ' + product)
+    product = DAOCart.instance().find( product )
+
+    if product is not None:
+        response = Response(json.dumps( product.toJSON(), indent=4 ),
+                            status=201,
+                            mimetype='application/json')
     else:
-        abort(404)
+        response = Response( {},
+                            status=201,
+                            mimetype='application/json')
 
-
-@app.route('/rest/<string:resource>', methods=['DELETE'])
-def DELETE_resource(resource):
-    name = request.form.to_dict()['name']
-    daos[resource].delete(name)
-    resp = jsonify({'status': '201'})
-    resp.status_code = 201
-    return resp
-
-
-@app.route('/rest/<string:resource>/all', methods=['GET'])
-def GET_ALL_resources(resource):
-    if resource in daos:
-        result = daos[resource].readAll()
-        resp = jsonify(result)
-        resp.status_code = 200
-        return resp
-    else:
-        abort(404)
-
-
-@app.route('/rest/<string:resource>/all', methods=['DELETE'])
-def DELETE_all(resource):
-    daos[resource].deleteAll()
-    resp = jsonify({'status': '201'})
-    resp.status_code = 201
-    return resp
-
-
+    return response
 
 
 

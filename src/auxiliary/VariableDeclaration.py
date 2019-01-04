@@ -40,24 +40,6 @@ server_info['android_dev'] = 'Juan Carlos Serrano'
 server_info['repository']  = 'https://github.com/gomezportillo/dss-pharmacy'
 
 
-# DAOs
-daos = {}
-daos['products']   = DAOProduct.instance()
-daos['users']      = DAOUser.instance()
-daos['pharmacies'] = DAOPharmacy.instance()
-daos['orders']     = DAOOrder.instance()
-daos['cart']       = DAOCart.instance()
-
-
-# Constructors
-constructors = {}
-constructors['products']   = Product
-constructors['users']      = User
-constructors['pharmacies'] = Pharmacy
-constructors['orders']     = Order
-constructors['cart']       = ProductCart
-
-
 # HTML file directories
 HTML_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'html')
 CSS_DIR  = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'website', 'css')

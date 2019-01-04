@@ -17,7 +17,7 @@ class DAOCart(InterfaceDAO):
             for product in self.shopping_cart:
                 if product.name == new_product.name:
                     product.quantity += 1
-
+                    break
 
     def update(self, product):
         pass
