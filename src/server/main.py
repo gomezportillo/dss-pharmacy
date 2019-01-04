@@ -333,7 +333,6 @@ def POST_order():
 
     email = request.form.to_dict()['email']
     type = request.form.to_dict()['type']
-    date = str(datetime.datetime.now())
 
     cart = DAOCart.instance().readAll()
     user = DAOUser.instance().find( email )
@@ -345,7 +344,7 @@ def POST_order():
         message = {'status': '409', 'message': 'Cart cannot be empty.'}
 
     else:
-        order = Order(email, type, date, cart)
+        order = Order(email, type, cart)
         DAOOrder.instance().insert( order )
         DAOCart.instance().deleteAll()
         message = {'status': '201'}

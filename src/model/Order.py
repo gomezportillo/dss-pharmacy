@@ -1,3 +1,4 @@
+import datetime
 
 class Order:
 
@@ -5,7 +6,7 @@ class Order:
         self.user = user
         self.type = type
         self.cart = cart
-        self.date = date
+        self.date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
     def toJSON(self):

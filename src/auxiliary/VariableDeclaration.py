@@ -4,7 +4,6 @@ server in order to ease its readability and maintainability.
 """
 
 import os
-import datetime
 import json
 
 from model.DAOUser import DAOUser
