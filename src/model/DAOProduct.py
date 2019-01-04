@@ -1,6 +1,6 @@
-from model.product import Product
-from model.interfacedao import InterfaceDAO
-from auxiliary.singleton import Singleton
+from model.Product import Product
+from model.InterfaceDAO import InterfaceDAO
+from auxiliary.Singleton import Singleton
 
 
 @Singleton

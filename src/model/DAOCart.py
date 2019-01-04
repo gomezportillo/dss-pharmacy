@@ -1,6 +1,6 @@
-from model.product_cart import ProductCart
-from model.interfacedao import InterfaceDAO
-from auxiliary.singleton import Singleton
+from model.ProductCart import ProductCart
+from model.InterfaceDAO import InterfaceDAO
+from auxiliary.Singleton import Singleton
 
 
 @Singleton

@@ -1,6 +1,6 @@
-from model.pharmacy import Pharmacy
-from model.interfacedao import InterfaceDAO
-from auxiliary.singleton import Singleton
+from model.Pharmacy import Pharmacy
+from model.InterfaceDAO import InterfaceDAO
+from auxiliary.Singleton import Singleton
 
 
 @Singleton

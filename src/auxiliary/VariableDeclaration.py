@@ -6,17 +6,17 @@ server in order to ease its readability and maintainability.
 import os
 import datetime
 
-from model.daouser import DAOUser
-from model.daopharmacy import DAOPharmacy
-from model.daoproduct import DAOProduct
-from model.daoorder import DAOOrder
-from model.daocart import DAOCart
+from model.DAOUser import DAOUser
+from model.DAOPharmacy import DAOPharmacy
+from model.DAOProduct import DAOProduct
+from model.DAOOrder import DAOOrder
+from model.DAOCart import DAOCart
 
-from model.order import Order
-from model.pharmacy import Pharmacy
-from model.product import Product
-from model.user import User
-from model.product_cart import ProductCart
+from model.Order import Order
+from model.Pharmacy import Pharmacy
+from model.Product import Product
+from model.User import User
+from model.ProductCart import ProductCart
 
 
 # Metadata

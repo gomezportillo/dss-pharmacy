@@ -4,7 +4,7 @@ from flask import jsonify
 from flask import request
 from flask import abort
 
-from auxiliary.variable_declaration import *
+from auxiliary.VariableDeclaration import *
 
 
 # App definition

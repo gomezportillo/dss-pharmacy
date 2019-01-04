@@ -1,4 +1,8 @@
-from model.product import Product
+from model.Product import Product
+
+"""
+Class inheriting from Product class
+"""
 
 class ProductCart(Product):
 

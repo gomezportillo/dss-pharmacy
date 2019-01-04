@@ -1,6 +1,6 @@
-from model import order
-from model.interfacedao import InterfaceDAO
-from auxiliary.singleton import Singleton
+from model import Order
+from model.InterfaceDAO import InterfaceDAO
+from auxiliary.Singleton import Singleton
 
 
 @Singleton
