@@ -125,9 +125,9 @@ $( document ).ready(function()
 var debug = true;
 if ( debug )
 {
-  var PRODUCT_REST_URL = "http://localhost:/rest/products";
-  var CART_REST_URL = "http://localhost:/rest/cart";
-  var PHARMACIES_REST_URL = "http://localhost:/rest/pharmacies";
+  var PRODUCT_REST_URL = "http://localhost/rest/products";
+  var CART_REST_URL = "http://localhost/rest/cart";
+  var PHARMACIES_REST_URL = "http://localhost/rest/pharmacies";
 }
 else
 {
@@ -140,7 +140,7 @@ else
 function GET_products()
 {
   $.ajax({
-    url: PRODUCT_REST_URL + '/all',
+    url: PRODUCT_REST_URL,
     type: 'GET',
     dataType: 'json',
     success: function (products)
@@ -174,7 +174,7 @@ function GET_pharmacies()
   var $dropdown = $("#pharmacies-dropdown");
 
   $.ajax({
-    url: PHARMACIES_REST_URL + '/all',
+    url: PHARMACIES_REST_URL,
     type: 'GET',
     dataType: 'json',
     success: function (pharmacies)
@@ -211,10 +211,11 @@ $(function POST_products()
 
 $(document).on('click', '.delete-product-btn', function ()
 {
+  var name = $(this).attr('id');
   $.ajax({
-    url: PRODUCT_REST_URL,
+    url: PRODUCT_REST_URL + '/' + name,
     type: 'DELETE',
-    data: {'name':$(this).attr('id')},
+    data: {},
     success: function ()
     {
       location.reload();

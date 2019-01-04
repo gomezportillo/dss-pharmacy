@@ -1,3 +1,7 @@
+import os,sys,inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir  = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
 
 from auxiliary.VariableDeclaration import *
 
@@ -172,6 +176,77 @@ def GET_pharmacy(name):
     return response
 
 
+"""
+PRODUCTS
+"""
+"""
+This method will handle POST and PUT methods over products
+"""
+@app.route('/rest/products', methods=['POST', 'PUT'])
+def POST_product():
+
+    product_dict = request.form.to_dict()
+    print('POST/PUT on PRODUCTS: ' + str( product_dict ))
+    new_product = Product(dict=product_dict)
+    DAOProduct.instance().insert( new_product )
+
+    response = Response(json.dumps( {'status': '201'}, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+"""
+This method will handle the DELETE methods over products using URIs
+"""
+@app.route('/rest/products/<string:name>', methods=['DELETE'])
+def DELETE_product(name):
+
+    print('DELETE on PRODUCTS: ' + name)
+    DAOProduct.instance().delete( name )
+
+    response = Response(json.dumps( {'status': '201'}, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+
+"""
+This method will return all products
+"""
+@app.route('/rest/products', methods=['GET'])
+def GET_ALL_products():
+
+    print('GET ALL on PRODUCTS')
+    products = DAOProduct.instance().readAll()
+
+    response = Response(json.dumps( products, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+
+"""
+This method will handle the GET methods over products using URIs
+"""
+@app.route('/rest/products/<string:name>', methods=['GET'])
+def GET_product(name):
+
+    print('GET on PRODUCTS: ' + name)
+    product = DAOProduct.instance().find( name )
+
+    if product is not None:
+        response = Response(json.dumps( product.toJSON(), indent=4 ),
+                            status=201,
+                            mimetype='application/json')
+    else:
+        response = Response( {},
+                            status=201,
+                            mimetype='application/json')
+
+    return response
 
 
 """
@@ -191,7 +266,7 @@ def POST_resource(resource):
 
 
 @app.route('/rest/<string:resource>', methods=['DELETE'])
-def DELETE_product(resource):
+def DELETE_resource(resource):
     name = request.form.to_dict()['name']
     daos[resource].delete(name)
     resp = jsonify({'status': '201'})
