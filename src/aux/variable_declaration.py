@@ -17,8 +17,9 @@ from model.product import Product
 from model.user import User
 from model.product_cart import ProductCart
 
+
 # Metadata
-VERSION = 1.0
+VERSION = 1.1
 server_info = {}
 server_info['version']     = VERSION
 server_info['server_dev']  = 'Pedro Manuel Gómez-Portillo'
