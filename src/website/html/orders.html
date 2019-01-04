@@ -83,7 +83,7 @@ $( document ).ready(function()
 var debug = true;
 if ( debug )
 {
-  var ORDERS_REST_URL = "http://localhost:/rest/orders";
+  var ORDERS_REST_URL = "http://localhost/rest/orders";
 }
 else
 {
@@ -93,7 +93,7 @@ else
 function GET_orders()
 {
   $.ajax({
-    url: ORDERS_REST_URL + '/all',
+    url: ORDERS_REST_URL,
     type: 'GET',
     dataType: 'json',
     success: function (orders)

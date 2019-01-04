@@ -14,7 +14,7 @@ class DAOOrder(InterfaceDAO):
         self.orders.append( order )
 
 
-    def update(self, product):
+    def update(self, products):
         pass
 
 
@@ -22,16 +22,20 @@ class DAOOrder(InterfaceDAO):
         return [ order.toJSON() for order in self.orders ]
 
 
-    def delete(self, product):
-        pass
-
+    def delete(self, user):
+        for order in self.orders:
+            if order.user == user:
+                self.orders.remove( order )
 
     def deleteAll(self):
         self.orders = []
 
 
-    def find(self, product):
-        pass
+    def find(self, email):
+        for order in self.orders:
+            if order.user == email:
+                yield order
+        return None
 
 
     def set_up_ddbb(self):

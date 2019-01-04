@@ -48,7 +48,7 @@ class DAOUser(InterfaceDAO):
 
     def set_up_ddbb(self):
         user1 = User('admin', 'Administrator', 'admin')
-        user2 = User('gomezportillo@dss.com', 'Pedro Manuel Gómez-Portillo', 1234)
+        user2 = User('gomezportillo@dss.com', 'Pedro Manuel Gomez-Portillo', 1234)
         user3 = User('xenahort@dss.com', 'Juan Carlos Serrano', 'secretpassword')
 
         self.users.append( user1 )

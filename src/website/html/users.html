@@ -113,7 +113,7 @@ $( document ).ready(function()
 var debug = true;
 if ( debug )
 {
-  var USERS_REST_URL = "http://localhost:/rest/users";
+  var USERS_REST_URL = "http://localhost/rest/users";
 }
 else
 {
@@ -123,7 +123,7 @@ else
 function GET_users()
 {
   $.ajax({
-    url: USERS_REST_URL + '/all',
+    url: USERS_REST_URL,
     type: 'GET',
     dataType: 'json',
     success: function (users)
@@ -150,10 +150,11 @@ function GET_users()
 
 $(document).on('click', '.delete-user-btn', function ()
 {
+  var name = $(this).attr('id');
   $.ajax({
-    url: USERS_REST_URL,
+    url: USERS_REST_URL + '/' + name,
     type: 'DELETE',
-    data: {'name':$(this).attr('id')},
+    data: {},
     success: function ()
     {
       location.reload();

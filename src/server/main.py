@@ -53,13 +53,11 @@ This method will return any asked webpage, or the 404 webpage if not found
 @app.route('/<string:route>', methods=['GET'])
 def get_html_page(route):
 
-    html_file =  route + '.html'
-    print(html_file)
-    print(os.path.isfile(html_file))
+    html_file_name =  route + '.html'
 
-    if os.path.isfile( os.path.join(HTML_DIR, html_file )):
+    if os.path.isfile( os.path.join(HTML_DIR, html_file_name)):
         return send_from_directory(HTML_DIR,
-                                   html_file)
+                                   html_file_name)
     else:
         return send_from_directory(HTML_DIR,
                                    '404.html')
@@ -250,6 +248,172 @@ def GET_product(name):
 
 
 """
+USERS
+"""
+"""
+This method will handle POST and PUT methods over users
+"""
+@app.route('/rest/users', methods=['POST', 'PUT'])
+def POST_user():
+
+    user_dict = request.form.to_dict()
+    print('POST/PUT on USERS: ' + str( user_dict ))
+    new_user = User(dict=user_dict)
+    DAOUser.instance().insert( new_user )
+
+    response = Response(json.dumps( {'status': '201'}, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+"""
+This method will handle the DELETE methods over users using URIs
+"""
+@app.route('/rest/users/<string:name>', methods=['DELETE'])
+def DELETE_user(name):
+
+    print('DELETE on USERS: ' + name)
+    DAOUser.instance().delete( name )
+
+    response = Response(json.dumps( {'status': '201'}, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+
+"""
+This method will return all users
+"""
+@app.route('/rest/users', methods=['GET'])
+def GET_ALL_users():
+
+    print('GET ALL on USERS')
+    users = DAOUser.instance().readAll()
+
+    response = Response(json.dumps( users, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+
+    return response
+
+
+
+"""
+This method will handle the GET methods over users using URIs
+"""
+@app.route('/rest/users/<string:email>', methods=['GET'])
+def GET_user(email):
+
+    print('GET on USERS: ' + email)
+    user = DAOUser.instance().find( email )
+
+    if user is not None:
+        response = Response(json.dumps( user.toJSON(), indent=4 ),
+                            status=201,
+                            mimetype='application/json')
+    else:
+        response = Response( {},
+                            status=201,
+                            mimetype='application/json')
+
+    return response
+
+
+
+"""
+ORDERS
+"""
+"""
+This method will handle POST and PUT methods over orders
+"""
+@app.route('/rest/orders', methods=['POST', 'PUT'])
+def POST_order():
+
+    email = request.form.to_dict()['email']
+    type = request.form.to_dict()['type']
+    date = str(datetime.datetime.now())
+
+    cart = DAOCart.instance().readAll()
+    user = DAOUser.instance().find( email )
+
+    if user is None:
+        message = {'status': '404', 'message': 'User with email ' + email + ' not found.'}
+
+    elif not cart:
+        message = {'status': '409', 'message': 'Cart cannot be empty.'}
+
+    else:
+        order = Order(email, type, date, cart)
+        DAOOrder.instance().insert( order )
+        DAOCart.instance().deleteAll()
+        message = {'status': '201'}
+
+    response = Response(json.dumps( message ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+"""
+This method will handle the DELETE methods over orders using URIs
+"""
+@app.route('/rest/orders/<string:id>', methods=['DELETE'])
+def DELETE_order(id):
+
+    print('DELETE on ORDERS: ' + id)
+    DAOOrder.instance().delete( id )
+
+    response = Response(json.dumps( {'status': '201'}, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+    return response
+
+
+
+"""
+This method will return all orders
+"""
+@app.route('/rest/orders', methods=['GET'])
+def GET_ALL_order():
+
+    print('GET ALL on ORDERS')
+    orders = DAOOrder.instance().readAll()
+
+    response = Response(json.dumps( orders, indent=4 ),
+                        status=201,
+                        mimetype='application/json')
+
+    return response
+
+
+
+"""
+This method will handle the GET methods over orders using URIs
+"""
+@app.route('/rest/orders/<string:email>', methods=['GET'])
+def GET_order(email):
+
+    print('GET on ORDERS: ' + email)
+    orders = DAOOrder.instance().find( email )
+
+    if orders is not None:
+        orders_json = [ order.toJSON() for order in orders ]
+        response = Response(json.dumps( orders_json, indent=4 ),
+                            status=201,
+                            mimetype='application/json')
+    else:
+        response = Response( {},
+                            status=201,
+                            mimetype='application/json')
+
+    return response
+
+
+
+
+"""
 #############################################################################################
 """
 @app.route('/rest/<string:resource>', methods=['POST', 'PUT'])
@@ -270,31 +434,6 @@ def DELETE_resource(resource):
     name = request.form.to_dict()['name']
     daos[resource].delete(name)
     resp = jsonify({'status': '201'})
-    resp.status_code = 201
-    return resp
-
-
-# Overrides the generic template method
-@app.route('/rest/orders', methods=['POST', 'PUT'])
-def POST_order():
-    email = request.form.to_dict()['email']
-    type = request.form.to_dict()['type']
-    date = datetime.datetime.now()
-    cart = daos['cart'].readAll()
-    user = daos['users'].find( email )
-
-    if user is None:
-        resp = jsonify({'status': '404', 'message': 'User with email ' + email + ' not found.'})
-
-    elif not cart:
-        resp = jsonify({'status': '409', 'message': 'Cart cannot be empty.'})
-
-    else:
-        order = Order(email, type, date, cart)
-        daos['orders'].insert( order )
-        daos['cart'].deleteAll()
-        resp = jsonify({'status': '201'})
-
     resp.status_code = 201
     return resp
 
