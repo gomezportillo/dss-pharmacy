@@ -60,6 +60,7 @@
               <th>Client email</th>
               <th>Type</th>
               <th>List of products</th>
+              <th>Date</th>
               <th>Total price</th>
             </thead>
             <tbody>
@@ -120,6 +121,7 @@ function GET_orders()
         all_products += '</ul>';
 
         new_row += '<td>' + all_products + '</td>';
+        new_row += '<td>' + value.date + '</td>';
         new_row += '<td>' + total_price + ' €</td></tr>';
         jQuery("#table-orders > tbody:last-child").append(new_row);
       });

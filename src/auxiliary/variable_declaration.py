@@ -4,6 +4,7 @@ server in order to ease its readability and maintainability.
 """
 
 import os
+import datetime
 
 from model.daouser import DAOUser
 from model.daopharmacy import DAOPharmacy

@@ -71,7 +71,8 @@ def DELETE_product(resource):
 def POST_order():
     email = request.form.to_dict()['email']
     type = request.form.to_dict()['type']
-    cart  = daos['cart'].readAll()
+    date = datetime.datetime.now()
+    cart = daos['cart'].readAll()
     user = daos['users'].find( email )
 
     if user is None:
@@ -81,7 +82,7 @@ def POST_order():
         resp = jsonify({'status': '409', 'message': 'Cart cannot be empty.'})
 
     else:
-        order = Order(email, type, cart)
+        order = Order(email, type, date, cart)
         daos['orders'].insert( order )
         daos['cart'].deleteAll()
         resp = jsonify({'status': '201'})
