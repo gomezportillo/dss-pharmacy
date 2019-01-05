@@ -341,7 +341,6 @@ def POST_order():
 
     else:
         order = Order(email, type, date, cart)
-        print(order.toJSON())
         DAOOrder.instance().insert( order )
         DAOCart.instance().deleteAll()
         message = {'status': '201'}
