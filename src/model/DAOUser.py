@@ -2,6 +2,7 @@ from model.User import User
 from model.InterfaceDAO import InterfaceDAO
 from auxiliary.Singleton import Singleton
 
+import MySQLdb
 
 @Singleton
 class DAOUser(InterfaceDAO):
@@ -26,7 +27,16 @@ class DAOUser(InterfaceDAO):
 
 
     def readAll(self):
-        return [ user.toJSON() for user in self.users ]
+        users = []
+        query = "SELECT * FROM USERS"
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+
+        for row in rows:
+            u = User(row[0], row[1], row[2])
+            users.append( u )
+
+        return [ user.toJSON() for user in users ]
 
 
     def delete(self, email):
@@ -47,10 +57,34 @@ class DAOUser(InterfaceDAO):
 
 
     def set_up_ddbb(self):
-        user1 = User('admin', 'Administrator', 'admin')
-        user2 = User('gomezportillo@dss.com', 'Pedro Manuel Gomez-Portillo', 1234)
-        user3 = User('xenahort@dss.com', 'Juan Carlos Serrano', 'secretpassword')
 
-        self.users.append( user1 )
-        self.users.append( user2 )
-        self.users.append( user3 )
+        db = MySQLdb.connect(host='us-cdbr-gcp-east-01.cleardb.net',
+                             user='b6c862ade2902a',
+                             passwd='f05cd157',
+                             db='gcp_1e27e3d6e920e92796e6',
+                             port=3306)
+
+        self.cursor = db.cursor()
+        self.cursor.execute ("SELECT VERSION()")
+        row = self.cursor.fetchone()
+        print("server version:", row[0])
+
+
+        query = "DROP TABLE USERS"
+        self.cursor.execute(query)
+
+        query = """ CREATE TABLE USERS (
+                    EMAIL    CHAR(30) NOT NULL PRIMARY KEY,
+                    NAME     CHAR(30),
+                    PASSWORD CHAR(30) )"""
+
+        self.cursor.execute(query)
+
+        self.cursor.execute("""INSERT INTO USERS VALUES
+                            ('admin', 'Adminstrator', 'admin')""")
+
+        self.cursor.execute("""INSERT INTO USERS VALUES
+                            ('gomezportillo@dss.com', 'Pedro Manuel Gomez-Portillo', '1234')""")
+
+        self.cursor.execute("""INSERT INTO USERS VALUES
+                            ('xenahort@dss.com', 'Juan Carlos Serrano', 'secretpassworkd')""")
