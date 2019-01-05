@@ -328,8 +328,9 @@ def POST_order():
 
     email = request.form.to_dict()['email']
     type = request.form.to_dict()['type']
+    cart = request.form.to_dict()['cart']
+    date = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-    cart = DAOCart.instance().readAll()
     user = DAOUser.instance().find( email )
 
     if user is None:
@@ -339,7 +340,8 @@ def POST_order():
         message = {'status': '409', 'message': 'Cart cannot be empty.'}
 
     else:
-        order = Order(email, type, cart)
+        order = Order(email, type, date, cart)
+        print(order.toJSON())
         DAOOrder.instance().insert( order )
         DAOCart.instance().deleteAll()
         message = {'status': '201'}
@@ -386,15 +388,14 @@ def GET_ALL_order():
 """
 This method will handle the GET methods over orders using URIs
 """
-@app.route('/rest/orders/<string:email>', methods=['GET'])
-def GET_order(email):
+@app.route('/rest/orders/<string:id>', methods=['GET'])
+def GET_order(id):
 
-    print('GET on ORDERS: ' + email)
-    orders = DAOOrder.instance().find( email )
+    print('GET on ORDERS: ' + id)
+    order = DAOOrder.instance().find( id )
 
-    if orders is not None:
-        orders_json = [ order.toJSON() for order in orders ]
-        response = Response(json.dumps( orders_json, indent=4 ),
+    if order is not None:
+        response = Response(json.dumps( order.toJSON(), indent=4 ),
                             status=201,
                             mimetype='application/json')
     else:

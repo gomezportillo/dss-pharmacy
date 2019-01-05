@@ -5,6 +5,7 @@ server in order to ease its readability and maintainability.
 
 import os
 import json
+import datetime
 
 from model.DAOUser import DAOUser
 from model.DAOPharmacy import DAOPharmacy

@@ -1,16 +1,17 @@
-import datetime
 
 class Order:
 
-    def __init__(self, user='email@dss', type='Purchase', date='01/01/2019', cart={}):
+    def __init__(self, user='email@dss', type='Purchase', date='now', products={}, id=0):
         self.user = user
         self.type = type
-        self.cart = cart
-        self.date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.date = date
+        self.cart = products
+        self.id   = id
 
 
     def toJSON(self):
         json_msg             = {}
+        json_msg['id']       = self.id
         json_msg['email']    = self.user
         json_msg['type']     = self.type
         json_msg['date']     = self.date

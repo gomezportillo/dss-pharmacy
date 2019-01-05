@@ -98,6 +98,11 @@
 $( document ).ready(function()
 {
   GET_cart();
+
+  setTimeout(function(){
+    console.log(parse_cart());
+  }, 100);
+
 });
 
 var debug = true;
@@ -120,14 +125,16 @@ function GET_cart()
     dataType: 'json',
     success: function (products)
     {
-      console.log( products );
+      // console.log( products );
       var total_price = 0;
-      $.each(products, function (key, value) {
-        var new_row = '<tr><td>' + value.name + '</td>'+
-        '<td>'+ value.description + '</td>'+
-        '<td>'+ value.price    + '</td>' +
-        '<td>'+ value.pharmacy + '</td>'+
-        '<td>'+ value.quantity + '</td>';
+      $.each(products, function (key, value)
+      {
+        var new_row = '<tr class="product_row">'+
+        '<td class="name">' + value.name + '</td>'+
+        '<td class="description">'+ value.description + '</td>'+
+        '<td class="price">'+ value.price    + '</td>' +
+        '<td class="pharmacy">'+ value.pharmacy + '</td>'+
+        '<td class="quantity">'+ value.quantity + '</td>';
 
         jQuery("#table-cart > tbody:last-child").append(new_row);
 
@@ -161,12 +168,14 @@ $(document).on('click', '.delete-cart', function ()
 $(document).on('click', '.reserve-cart', function ()
 {
   var email = $('input[name=email]').val();
+  var cart = parse_cart();
+
   if (email)
   {
     $.ajax({
       url: ORDERS_REST_URL,
       type: 'POST',
-      data: {'email': email, 'type':'Reserve'},
+      data: {'email': email, 'type':'Reserve', 'cart': cart},
       success: function (response)
       {
         if ( response.status == 404 ) // user not found
@@ -198,12 +207,14 @@ $(document).on('click', '.reserve-cart', function ()
 $(document).on('click', '.buy-cart', function ()
 {
   var email = $('input[name=email]').val();
+  var cart = parse_cart();
+
   if (email)
   {
     $.ajax({
       url: ORDERS_REST_URL,
       type: 'POST',
-      data: {'email': email, 'type':'Purchase'},
+      data: {'email': email, 'type':'Purchase', 'cart': cart},
       success: function (response)
       {
         if ( response.status == 404 ) // user not found
@@ -231,5 +242,24 @@ $(document).on('click', '.buy-cart', function ()
     alert("Email cannot be empty")
   }
 });
+
+function parse_cart()
+{
+  var products = "";
+  $("#table-cart tbody tr").each(function(i, tr)
+  {
+    $this = $(this);
+    var name        = $this.find(".name").html();
+    var description = $this.find(".description").html();
+    var price       = $this.find(".price").html();
+    var pharmacy    = $this.find(".pharmacy").html();
+    var quantity    = $this.find(".quantity").html();
+
+    var parsed_product = name +'. '+ description + '. '+ pharmacy +'. '+price +'EUR x '+  quantity + 'u;';
+    products += parsed_product;
+  });
+
+  return products;
+}
 </script>
 </html>

@@ -65,7 +65,6 @@ class DAOProduct(InterfaceDAO):
         return None
 
 
-
     def set_up_ddbb(self):
 
         query = "DROP TABLE IF EXISTS Products"

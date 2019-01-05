@@ -57,11 +57,11 @@
         <div id="see-products-tab" class="tab-pane fade in active">
           <table class="table table-hover" id="table-orders">
             <thead>
-              <th>Client email</th>
+              <th>ID</th>
+              <th>Client</th>
               <th>Type</th>
-              <th>List of products</th>
               <th>Date</th>
-              <th>Total price</th>
+              <th>List of products</th>
             </thead>
             <tbody>
               <!-- Orders will be placed here -->
@@ -101,28 +101,22 @@ function GET_orders()
       console.log(orders);
       $.each(orders, function (key, value)
       {
-        var new_row = '<tr><td>' + value.email + '</td>'+
-        '<td>'+ value.type + '</td>';
+        var new_row = '<tr><td>' + value.id + '</td>'+
+        '<td>'+ value.email + '</td>'+
+        '<td>'+ value.type + '</td>'+
+        '<td>'+ value.date + '</td>';
 
-        var total_price = 0;
         var all_products = '<ul>';
-        $.each(value.products, function (key_p, value_p)
+        $.each(value.products.split(';'), function(key, value)
         {
-          all_products += '<li>'
-          all_products += '<b>' + value_p.name + '</b>'
-          all_products += ' (' + value_p.description + ').'
-          all_products += ' Sold in ' + value_p.pharmacy + '.';
-          all_products += ' Price: ' + value_p.price + '€ '
-          all_products += ' x ' + value_p.quantity + ' units';
-          all_products += '</li>'
-
-          total_price += value_p.price * value_p.quantity;
+          if (value)
+          {
+            all_products += '<li>' + value + '</li>';
+          }
         });
-        all_products += '</ul>';
 
-        new_row += '<td>' + all_products + '</td>';
-        new_row += '<td>' + value.date + '</td>';
-        new_row += '<td>' + total_price + ' €</td></tr>';
+        new_row += '<td>'+ all_products + '</td>';
+
         jQuery("#table-orders > tbody:last-child").append(new_row);
       });
     },
