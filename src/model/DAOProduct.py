@@ -2,6 +2,7 @@ from model.Product import Product
 from model.InterfaceDAO import InterfaceDAO
 from auxiliary.Singleton import Singleton
 
+import MySQLdb
 
 @Singleton
 class DAOProduct(InterfaceDAO):
@@ -12,45 +13,105 @@ class DAOProduct(InterfaceDAO):
 
 
     def insert(self, product):
-        if self.find( product.name ) is None:
-            self.products.append( product )
-        else:
-            self.update(product)
+        query = """INSERT INTO
+                   Products(name, description, pharmacy, price)
+                   VALUES('{0}', '{1}', '{2}', '{3}')"""
+
+        query = query.format(product.name, product.description, product.pharmacy, product.price)
+
+        try:
+            self.execute_query( query )
+        except MySQLdb.IntegrityError:
+            self.update( product )
 
 
-    def update(self, new_product):
-        for product in self.products:
-            if product.name == new_product.name:
-                self.products.remove( product )
-                self.products.append( new_product )
+    def update(self, product):
+        query = "UPDATE Products SET description='{0}', pharmacy='{1}', price='{2}' WHERE name='{3}'"
+
+        query = query.format(product.description, product.pharmacy, product.price, product.name)
+
+        self.execute_query( query )
 
 
     def readAll(self):
-        return [ product.toJSON() for product in self.products ]
+        products = []
+        query = "SELECT * FROM Products"
+        rows = self.execute_query( query )
+
+        for row in rows:
+            p = Product(row[0], row[1], row[2], row[3])
+            products.append( p )
+
+        return [ product.toJSON() for product in products ]
 
 
     def delete(self, name):
-        for product in self.products:
-            if product.name == name:
-                self.products.remove( product )
+        query = "DELETE FROM Products WHERE name='{}'".format( name )
+        rows = self.execute_query( query )
 
 
     def deleteAll(self):
-        self.products = []
+        query = "TRUNCATE TABLE Products"
+        self.execute_query( query )
 
 
     def find(self, product_name):
-        for product in self.products:
-            if product.name == product_name:
-                return product
+        query = "SELECT * FROM Products WHERE name='{}'".format( product_name )
+        row = self.execute_query( query )
+
+        if row:
+            p = Product(row[0][0], row[0][1], row[0][2], row[0][3])
+            return p
+
         return None
 
 
-    def set_up_ddbb(self):
-        product1 = Product('Ibuprofen', 'Cures headache', 'Pharmacy 1', 7)
-        product2 = Product('Frenadol', 'Cures flu', 'Pharmacy 2', 12)
-        product3 = Product('Bandage', 'Cures wounds', 'Pharmacy 1', 10)
 
-        self.products.append( product1 )
-        self.products.append( product2 )
-        self.products.append( product3 )
+    def set_up_ddbb(self):
+
+        query = "DROP TABLE IF EXISTS Products"
+        self.execute_query( query )
+
+        query = """ CREATE TABLE Products (
+                    name        CHAR(30) NOT NULL PRIMARY KEY,
+                    description CHAR(30),
+                    pharmacy    CHAR(30),
+                    price       INT) """
+        self.execute_query( query )
+
+
+        query = """INSERT INTO Products
+                   VALUES('Ibuprofen', 'Cures headache', 'Pharmacy 1', 7)"""
+        self.execute_query( query )
+
+        query = """INSERT INTO Products
+                   VALUES('Frenadol', 'Cures flu', 'Pharmacy 2', 12)"""
+        self.execute_query( query )
+
+        query = """INSERT INTO Products
+                   VALUES('Bandage', 'Cures wounds', 'Pharmacy 1', 10)"""
+        self.execute_query( query )
+
+
+    def execute_query(self, query):
+        db = MySQLdb.connect(host='us-cdbr-gcp-east-01.cleardb.net',
+                             user='b761ae150766d3',
+                             passwd='4bcf3d10',
+                             db='gcp_ca2ad2566039a3f0f01c',
+                             port=3306)
+
+        cursor = db.cursor()
+
+        try:
+            cursor.execute(query)
+        except Exception as error:
+            cursor.close()
+            db.close()
+            raise error
+
+        db.commit()
+        result = cursor.fetchall()
+        cursor.close()
+        db.close()
+
+        return result

@@ -3,7 +3,6 @@ from model.InterfaceDAO import InterfaceDAO
 from auxiliary.Singleton import Singleton
 
 import MySQLdb
-import traceback
 
 @Singleton
 class DAOUser(InterfaceDAO):
@@ -56,14 +55,18 @@ class DAOUser(InterfaceDAO):
 
     def find(self, email):
         query = "SELECT * FROM Users WHERE email='{}'".format( email )
-        row = self.execute_query( query )[0]
-        u = User(row[0], row[1], row[2])
-        return u
+        row = self.execute_query( query )
+
+        if row:
+            u = User(row[0][0], row[0][1], row[0][2])
+            return u
+
+        return None
 
 
     def set_up_ddbb(self):
 
-        query = "DROP TABLE Users"
+        query = "DROP TABLE IF EXISTS Users"
         self.execute_query( query )
 
         query = """ CREATE TABLE Users (
@@ -86,9 +89,9 @@ class DAOUser(InterfaceDAO):
 
     def execute_query(self, query):
         db = MySQLdb.connect(host='us-cdbr-gcp-east-01.cleardb.net',
-                             user='b6c862ade2902a',
-                             passwd='f05cd157',
-                             db='gcp_1e27e3d6e920e92796e6',
+                             user='b761ae150766d3',
+                             passwd='4bcf3d10',
+                             db='gcp_ca2ad2566039a3f0f01c',
                              port=3306)
 
         cursor = db.cursor()
@@ -100,8 +103,8 @@ class DAOUser(InterfaceDAO):
             db.close()
             raise error
 
-        result = cursor.fetchall()
         db.commit()
+        result = cursor.fetchall()
         cursor.close()
         db.close()
 
