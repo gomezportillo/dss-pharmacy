@@ -132,7 +132,8 @@
             "quantity":1
          }
       ],
-      "type":"Reserve"
+      "type":"Reserve",
+			"date":"2018-01-01"
    },
    {  
 		 "email":"user2@email.com",
@@ -152,7 +153,8 @@
             "quantity":1
          }
       ],
-      "type":"Purchase"
+      "type":"Purchase",
+			"date":"2018-01-01"
    }
 ]
 ```
