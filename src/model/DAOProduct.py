@@ -8,7 +8,6 @@ import MySQLdb
 class DAOProduct(InterfaceDAO):
 
     def __init__(self):
-        self.products = []
         self.set_up_ddbb()
 
 
@@ -47,7 +46,7 @@ class DAOProduct(InterfaceDAO):
 
     def delete(self, name):
         query = "DELETE FROM Products WHERE name='{}'".format( name )
-        rows = self.execute_query( query )
+        self.execute_query( query )
 
 
     def deleteAll(self):

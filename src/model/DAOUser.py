@@ -45,7 +45,7 @@ class DAOUser(InterfaceDAO):
 
     def delete(self, email):
         query = "DELETE FROM Users WHERE email='{}'".format( email )
-        rows = self.execute_query( query )
+        self.execute_query( query )
 
 
     def deleteAll(self):
