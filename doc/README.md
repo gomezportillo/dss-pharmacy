@@ -28,7 +28,7 @@
 
 ## Products
 
-**GET** `/rest/products/all` will return a list with all the products stored on the server.
+**GET** `/rest/products` will return a list with all the products stored on the server.
 
 ```
 [  
@@ -53,9 +53,11 @@
 ]
 ```
 
+**GET** `/rest/products/<name>` will return the product with that name.
+
 **POST** or **PUT** `/rest/products` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product or override it if already exists one with the same name.
 
-**DELETE** `/rest/products` indicating the _name_ of the product to be deleted will delete it.
+**DELETE** `/rest/products/<name>` will delete it.
 
 ## Pharmacies
 
@@ -84,7 +86,7 @@
 
 ## Cart
 
-**GET** `/rest/cart/all` will return the list of all the products in the cart with the following format.
+**GET** `/rest/cart` will return the list of all the products in the cart with the following format.
 
 ```
 [  
@@ -105,14 +107,17 @@
 ]
 ```
 
+**GET** `/rest/cart/<product>` will return the product on the cart with that name if it exists.
+
+
 **POST** or **PUT** `/rest/cart` indicating _name_, _description_, _pharmacy_ and _price_ will create a new product in the cart with quantity **1** or add it **+1** quantity if already exists one with the same name.
 
-**DELETE** `/rest/cart/all` will delete the whole shopping cart.
+**DELETE** `/rest/cart` will delete the whole shopping cart.
 
 
 ## Order
 
-**GET** `/rest/orders/all` will return the list of all the orders in the cart with the following format.
+**GET** `/rest/orders` will return the list of all the orders in the cart with the following format.
 
 ```
 [  
@@ -152,6 +157,9 @@
 ]
 ```
 
+**GET** `/rest/orders/<email>` will return the list of all the orders of the user with that email.
+
+
 **POST** or **PUT** `/rest/order` indicating _email_ and _type_ will create a new order with the products that are currently on the cart (no need to specify them). The type of the order can be **Reserve** if it is a reserve or **Purchase** if the user has bought the products. No reestrictions regarding quantity or pharmacies are applied.
 
 ### Errors
@@ -176,7 +184,7 @@
 
 ## Users
 
-**GET** `/rest/users/all` will return the list of all users with the following format.
+**GET** `/rest/users` will return the list of all users with the following format.
 
 ```
 [  
@@ -198,6 +206,9 @@
 ]
 ```
 
+**GET** `/rest/users/<email>` will return the user with that email.
+
+
 **POST** or **PUT** `/rest/users` indicating _email_, _name_ and _password_ will create a new users or override it if already exists one with the same email.
 
-**DELETE** `/rest/users` indicating the _email_ of the users to be deleted will delete it.
+**DELETE** `/rest/users/<email>` will delete it.
