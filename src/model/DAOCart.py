@@ -42,3 +42,11 @@ class DAOCart(InterfaceDAO):
             if product.name == product_name:
                 return product
         return None
+
+
+    def set_up_ddbb(self):
+        pass
+
+
+    def execute_query(self):
+        pass

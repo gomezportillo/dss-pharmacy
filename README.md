@@ -1,7 +1,3 @@
-⚠️ UNDER HEAVY REFACTOR ⚠️
-
-⚠️ SERVER MAY NOT WORK AS EXPECTED ⚠️
-
 # Pharmacy managing project
 
 This repository corresponds to the server of the project.

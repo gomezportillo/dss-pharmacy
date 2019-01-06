@@ -1,5 +1,9 @@
-from auxiliary.VariableDeclaration import *
+import os, sys, inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir  = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
 
+from auxiliary.VariableDeclaration import *
 
 """
 This method will return the favicon of the website
@@ -387,17 +391,15 @@ def POST_order():
     date = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
     user = DAOUser.instance().find( email )
+    print('POST/PUT on ORDERS: {}{}{}'.format( email, type, cart))
 
     if user is None:
-        print('===========================================El usuario {} no exsite'.format(email))
         message = {'status': '404', 'message': 'User with email ' + email + ' not found.'}
 
     elif not cart:
-        print('===========================================El carro está vacío')
         message = {'status': '409', 'message': 'Cart cannot be empty.'}
 
     else:
-        print('===========================================Pedido creado correctamente')
         order = Order(email, type, date, cart)
         DAOOrder.instance().insert( order )
         DAOCart.instance().deleteAll()

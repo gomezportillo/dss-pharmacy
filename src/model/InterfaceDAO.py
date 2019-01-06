@@ -1,11 +1,8 @@
 from abc import ABCMeta, abstractmethod
 
 class InterfaceDAO:
-    __metaclass__ = ABCMeta
 
-    @abstractmethod
-    def show(self):
-        raise NotImplementedError
+    __metaclass__ = ABCMeta
 
     @abstractmethod
     def insert(self, object):
@@ -33,4 +30,8 @@ class InterfaceDAO:
 
     @abstractmethod
     def set_up_ddbb(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def execute_query(self):
         raise NotImplementedError
