@@ -17,3 +17,19 @@ class Order:
         json_msg['date']     = self.date
         json_msg['products'] = self.cart
         return json_msg
+
+    def toXML(self):
+        xml_msg = '<order>'
+        xml_msg += '<id>{}</id>'.format( self.id )
+        xml_msg += '<email>{}</email>'.format( self.user )
+        xml_msg += '<type>{}</type>'.format( self.type )
+        xml_msg += '<date>{}</date>'.format( self.date )
+
+        xml_msg += '<products>'
+        for product in self.cart.split(';'):
+            if product:
+                xml_msg += '<product>{}</product>'.format( product )
+        xml_msg += '</products>'
+        xml_msg += '</order>'
+
+        return xml_msg

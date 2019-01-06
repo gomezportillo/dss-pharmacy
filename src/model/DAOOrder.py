@@ -35,7 +35,7 @@ class DAOOrder(InterfaceDAO):
             o = Order(row[1], row[2], row[3], row[4], row[0])
             orders.append( o )
 
-        return [ order.toJSON() for order in orders ]
+        return orders
 
     def delete(self, id):
         query = "DELETE FROM Orders WHERE id='{}'".format( id )
@@ -73,7 +73,7 @@ class DAOOrder(InterfaceDAO):
         self.execute_query( query )
 
         query = """INSERT INTO Orders(user, type, date, cart)
-                   VALUES('admin', 'Purchase', '1-1-2019', 'Bandage. Cures wounds. Pharmacy 1. 10EUR x 1u;')"""
+                   VALUES('admin', 'Purchase', '1-1-2019', 'Bandage. Cures wounds. Pharmacy 1. 10EUR x 1u;Frenadol. Cures flu. Pharmacy 2. 15EUR x 2u;')"""
         self.execute_query( query )
 
     def execute_query(self, query):

@@ -376,9 +376,19 @@ def GET_ALL_order():
     print('GET ALL on ORDERS')
     orders = DAOOrder.instance().readAll()
 
-    response = Response(json.dumps( orders, indent=4 ),
-                        status=201,
-                        mimetype='application/json')
+    format = parse_request_format( request )
+
+    if format == 'xml':
+        xml_orders = ''.join([ order.toXML() for order in orders ])
+        response = Response('<orders>{}</orders>'.format(xml_orders) ,
+                            status=201,
+                            mimetype='text/xml')
+
+    else:
+        json_orders = [ order.toJSON() for order in orders ]
+        response = Response(json.dumps( json_orders, indent=4),
+                            status=201,
+                            mimetype='application/json')
 
     return response
 
@@ -493,6 +503,19 @@ def GET_cart(product):
                             mimetype='application/json')
 
     return response
+
+
+def parse_request_format( request ):
+
+    try:
+        format = request.url.split('?format=')[1].lower()
+    except IndexError:
+        return 'json'
+
+    if format in ['xml', 'json']:
+        return format
+    else:
+        return 'json'
 
 
 
