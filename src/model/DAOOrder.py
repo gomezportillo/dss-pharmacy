@@ -20,11 +20,13 @@ class DAOOrder(InterfaceDAO):
 
         self.execute_query( query )
 
+
     def update(self, order):
         query = "UPDATE Orders SET user='{0}', type='{1}', date='{2}', cart='{3}' WHERE id='{4}'"
 
         query = query.format(order.user, order.type, order.date, order.cart, order.id)
         self.execute_query( query )
+
 
     def readAll(self):
         orders = []
@@ -36,6 +38,7 @@ class DAOOrder(InterfaceDAO):
             orders.append( o )
 
         return orders
+
 
     def delete(self, id):
         query = "DELETE FROM Orders WHERE id='{}'".format( id )
@@ -73,8 +76,9 @@ class DAOOrder(InterfaceDAO):
         self.execute_query( query )
 
         query = """INSERT INTO Orders(user, type, date, cart)
-                   VALUES('admin', 'Purchase', '1-1-2019', 'Bandage. Cures wounds. Pharmacy 1. 10EUR x 1u;Frenadol. Cures flu. Pharmacy 2. 15EUR x 2u;')"""
+                   VALUES('admin', 'Purchase', '1-1-2019 11:24:44', 'Bandage. Cures wounds. Pharmacy 1. 10EUR x 1u;Frenadol. Cures flu. Pharmacy 2. 15EUR x 2u;')"""
         self.execute_query( query )
+
 
     def execute_query(self, query):
         db = MySQLdb.connect(host='us-cdbr-gcp-east-01.cleardb.net',
