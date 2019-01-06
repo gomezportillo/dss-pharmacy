@@ -41,7 +41,7 @@ class DAOProduct(InterfaceDAO):
             p = Product(row[0], row[1], row[2], row[3])
             products.append( p )
 
-        return [ product.toJSON() for product in products ]
+        return products
 
 
     def delete(self, name):

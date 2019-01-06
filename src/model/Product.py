@@ -16,4 +16,16 @@ class Product:
 
     def toJSON(self):
         # return json.dumps(self, default=lambda o: o.__dict__)
-        return {'name':self.name,'description':self.description,'pharmacy':self.pharmacy,'price':self.price}
+        return {'name': self.name, 'description': self.description,
+                'pharmacy': self.pharmacy, 'price': self.price}
+
+
+    def toXML(self):
+        xml_msg = '<product>'
+        xml_msg += '<name>{}</name>'.format( self.name )
+        xml_msg += '<description>{}</description>'.format( self.description )
+        xml_msg += '<pharmacy>{}</pharmacy>'.format( self.pharmacy )
+        xml_msg += '<price>{}</price>'.format( self.price )
+        xml_msg += '</product>'
+
+        return xml_msg

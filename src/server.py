@@ -234,9 +234,19 @@ def GET_ALL_products():
     print('GET ALL on PRODUCTS')
     products = DAOProduct.instance().readAll()
 
-    response = Response(json.dumps( products, indent=4 ),
-                        status=201,
-                        mimetype='application/json')
+    format = parse_request_format( request)
+
+    if format == 'xml':
+        xml_products = ''.join([ product.toXML() for product in products ])
+        response = Response('<products>{}</products>'.format(xml_products),
+                            status=201,
+                            mimetype='text/xml')
+
+    else:
+        json_products = [ product.toJSON() for product in products ]
+        response = Response(json.dumps( json_products, indent=4 ),
+                            status=201,
+                            mimetype='application/json')
     return response
 
 
@@ -251,11 +261,20 @@ def GET_product(name):
     product = DAOProduct.instance().find( name )
 
     if product is not None:
-        response = Response(json.dumps( product.toJSON(), indent=4 ),
-                            status=201,
-                            mimetype='application/json')
+        format = parse_request_format( request)
+
+        if format == 'xml':
+            response = Response(product.toXML(),
+                                status=201,
+                                mimetype='text/xml')
+
+        else:
+            response = Response(json.dumps( product.toJSON(), indent=4 ),
+                                status=201,
+                                mimetype='application/json')
+
     else:
-        response = Response( {},
+        response = Response({},
                             status=201,
                             mimetype='application/json')
 
