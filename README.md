@@ -14,11 +14,12 @@ https://dss-pharmacy.herokuapp.com/
 
 If the server is down or you choose to deploy the project locally,
 
-* Clone the repository
-* Locate on the root directory
+* Clone the repository and move to the root directory
 * Execute `pip3 install -r requirements.txt`
-* Execute `python3 server/server.py`
-* Go to `localhost:`
+* Execute `python3 src/server/server.py`
+* Go to `localhost:80`
+
+Bear in mind that you have to change the variable `debug` on each HTML page from `false` to `true`.
 
 ## Documentation
 
@@ -30,4 +31,13 @@ Basically, the server will return JSON messages under HTTP petitions on the `/re
 * Users
 * Shopping cart
 
-Further documentation [can be seen here](doc/).
+Further documentation can be seen [on the following link](doc/).
+
+### Persistance
+
+The persistance of the project is made using MySQL on the PaaS [ClearDB](https://www.cleardb.com/).
+
+
+### Diagrams
+
+![Class diagram](doc/class-diagram.jpg)
