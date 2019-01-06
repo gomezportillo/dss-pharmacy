@@ -402,11 +402,18 @@ def GET_order(id):
 
     print('GET on ORDERS: ' + id)
     order = DAOOrder.instance().find( id )
+    format = parse_request_format( request )
 
     if order is not None:
-        response = Response(json.dumps( order.toJSON(), indent=4 ),
-                            status=201,
-                            mimetype='application/json')
+
+        if format == 'xml':
+            response = Response(order.toXML(),
+                                status=201,
+                                mimetype='text/xml')
+        else:
+            response = Response(json.dumps( order.toJSON(), indent=4 ),
+                                status=201,
+                                mimetype='application/json')
     else:
         response = Response( {},
                             status=201,
