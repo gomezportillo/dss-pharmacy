@@ -32,7 +32,7 @@ app = Flask(__name__)
 
 
 # Metadata
-VERSION = 1.2
+VERSION = 1.3
 server_info = {}
 server_info['version']     = VERSION
 server_info['server_dev']  = 'Pedro Manuel Gómez-Portillo'
