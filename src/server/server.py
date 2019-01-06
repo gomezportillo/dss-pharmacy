@@ -9,7 +9,7 @@ from auxiliary.VariableDeclaration import *
 """
 This method will return the favicon of the website
 """
-@app.route('/favicon.ico', , methods=['GET'])
+@app.route('/favicon.ico', methods=['GET'])
 def GET_favicon():
 
     return send_from_directory(IMG_DIR,
