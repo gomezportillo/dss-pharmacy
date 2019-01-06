@@ -15,3 +15,12 @@ class ProductCart(Product):
         json_msg = super().toJSON()
         json_msg['quantity'] = self.quantity
         return json_msg
+
+
+    def toXML(self):
+        xml_price = '<price>{}</price>'.format( self.quantity )
+        xml_msg = super().toXML()
+        xml_msg = xml_msg.split('</product>')
+        xml_msg = xml_msg[0] + xml_price + '</product>' + xml_msg[1]
+
+        return xml_msg

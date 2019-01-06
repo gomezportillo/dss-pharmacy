@@ -538,9 +538,19 @@ def GET_ALL_cart():
     print('GET ALL on CART')
     cart = DAOCart.instance().readAll()
 
-    response = Response(json.dumps( cart, indent=4 ),
-                        status=201,
-                        mimetype='application/json')
+    format = parse_request_format( request )
+
+    if format == 'xml':
+        xml_cart = ''.join([ product.toXML() for product in cart ])
+        response = Response('<cart>{}</cart>'.format(xml_cart),
+                            status=201,
+                            mimetype='text/xml')
+
+    else:
+        json_cart = [ product.toJSON() for product in cart ]
+        response = Response(json.dumps( json_cart, indent=4 ),
+                            status=201,
+                            mimetype='application/json')
 
     return response
 
@@ -556,9 +566,19 @@ def GET_cart(product):
     product = DAOCart.instance().find( product )
 
     if product is not None:
-        response = Response(json.dumps( product.toJSON(), indent=4 ),
-                            status=201,
-                            mimetype='application/json')
+
+        format = parse_request_format( request)
+
+        if format == 'xml':
+            response = Response(product.toXML(),
+                                status=201,
+                                mimetype='text/xml')
+
+        else:
+            response = Response(json.dumps( product.toJSON(), indent=4 ),
+                                status=201,
+                                mimetype='application/json')
+
     else:
         response = Response( {},
                             status=201,

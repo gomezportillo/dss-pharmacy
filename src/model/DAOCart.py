@@ -24,7 +24,7 @@ class DAOCart(InterfaceDAO):
 
 
     def readAll(self):
-        return [ product.toJSON() for product in self.shopping_cart ]
+        return self.shopping_cart
 
 
     def delete(self, product_name):
