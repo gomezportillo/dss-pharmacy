@@ -389,12 +389,15 @@ def POST_order():
     user = DAOUser.instance().find( email )
 
     if user is None:
+        print('===========================================El usuario {} no exsite'.format(email))
         message = {'status': '404', 'message': 'User with email ' + email + ' not found.'}
 
     elif not cart:
+        print('===========================================El carro está vacío')
         message = {'status': '409', 'message': 'Cart cannot be empty.'}
 
     else:
+        print('===========================================Pedido creado correctamente')
         order = Order(email, type, date, cart)
         DAOOrder.instance().insert( order )
         DAOCart.instance().deleteAll()
