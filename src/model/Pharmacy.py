@@ -14,3 +14,13 @@ class Pharmacy:
 
     def toJSON(self):
         return {'name':self.name,'latitude':self.latitude,'longitude':self.longitude}
+
+
+    def toXML(self):
+        xml_msg = '<pharmacy>'
+        xml_msg += '<name>{}</name>'.format( self.name )
+        xml_msg += '<latitude>{}</latitude>'.format( self.latitude )
+        xml_msg += '<longitude>{}</longitude>'.format( self.longitude )
+        xml_msg += '</pharmacy>'
+
+        return xml_msg

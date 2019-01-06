@@ -40,7 +40,7 @@ class DAOUser(InterfaceDAO):
             u = User(row[0], row[1], row[2])
             users.append( u )
 
-        return [ user.toJSON() for user in users ]
+        return users
 
 
     def delete(self, email):

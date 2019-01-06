@@ -64,7 +64,7 @@ This method overrides the default handler for the HTTP error 404 (not found)
 @app.errorhandler(404)
 def not_found(error=None):
 
-    return send_from_directory(html_dir,
+    return send_from_directory(HTML_DIR,
                                '404.html')
 
 
@@ -141,9 +141,20 @@ def GET_ALL_pharmacies():
     print('GET ALL on PHARMACIES')
     pharmacies = DAOPharmacy.instance().readAll()
 
-    response = Response(json.dumps( pharmacies, indent=4 ),
-                        status=201,
-                        mimetype='application/json')
+    format = parse_request_format( request )
+
+    if format == 'xml':
+        xml_pharmacies = ''.join([ pharmacy.toXML() for pharmacy in pharmacies ])
+        response = Response('<pharmacies>{}</pharmacies>'.format(xml_pharmacies),
+                            status=201,
+                            mimetype='text/xml')
+
+    else:
+        json_pharmacies = [ pharmacy.toJSON() for pharmacy in pharmacies ]
+        response = Response(json.dumps( json_pharmacies, indent=4 ),
+                            status=201,
+                            mimetype='application/json')
+
     return response
 
 
@@ -158,9 +169,18 @@ def GET_pharmacy(name):
     pharmacy = DAOPharmacy.instance().find( name )
 
     if pharmacy is not None:
-        response = Response(json.dumps( pharmacy.toJSON(), indent=4 ),
-                            status=201,
-                            mimetype='application/json')
+        format = parse_request_format( request )
+
+        if format == 'xml':
+            response = Response(pharmacy.toXML(),
+                                status=201,
+                                mimetype='text/xml')
+
+        else:
+            response = Response(json.dumps( pharmacy.toJSON(), indent=4 ),
+                                status=201,
+                                mimetype='application/json')
+
     else:
         response = Response( {},
                             status=201,
@@ -287,9 +307,18 @@ def GET_ALL_users():
     print('GET ALL on USERS')
     users = DAOUser.instance().readAll()
 
-    response = Response(json.dumps( users, indent=4 ),
-                        status=201,
-                        mimetype='application/json')
+    format = parse_request_format( request )
+
+    if format == 'xml':
+        xml_users = ''.join([ user.toXML() for user in users ])
+        response = Response('<users>{}</users>'.format(xml_users),
+                            status=201,
+                            mimetype='text/xml')
+    else:
+        json_users = [ user.toJSON() for user in users ]
+        response = Response(json.dumps( json_users, indent=4 ),
+                            status=201,
+                            mimetype='application/json')
 
     return response
 
@@ -305,9 +334,16 @@ def GET_user(email):
     user = DAOUser.instance().find( email )
 
     if user is not None:
-        response = Response(json.dumps( user.toJSON(), indent=4 ),
-                            status=201,
-                            mimetype='application/json')
+
+        format = parse_request_format( request )
+        if format == 'xml':
+            response = Response(user.toXML(),
+                                status=201,
+                                mimetype='text/xml')
+        else:
+            response = Response(json.dumps( user.toJSON(), indent=4 ),
+                                status=201,
+                                mimetype='application/json')
     else:
         response = Response( {},
                             status=201,
@@ -380,7 +416,7 @@ def GET_ALL_order():
 
     if format == 'xml':
         xml_orders = ''.join([ order.toXML() for order in orders ])
-        response = Response('<orders>{}</orders>'.format(xml_orders) ,
+        response = Response('<orders>{}</orders>'.format(xml_orders),
                             status=201,
                             mimetype='text/xml')
 

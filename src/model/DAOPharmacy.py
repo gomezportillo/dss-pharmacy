@@ -41,7 +41,7 @@ class DAOPharmacy(InterfaceDAO):
             p = Pharmacy(row[0], row[1], row[2])
             pharmacies.append( p )
 
-        return [ pharmacy.toJSON() for pharmacy in pharmacies ]
+        return pharmacies
 
 
     def delete(self, pharmacy_name):
