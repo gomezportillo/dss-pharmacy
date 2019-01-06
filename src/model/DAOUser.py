@@ -83,7 +83,7 @@ class DAOUser(InterfaceDAO):
         self.execute_query( query )
 
         query= """INSERT INTO Users VALUES
-               ('xenahort@dss.com', 'Juan Carlos Serrano', 'secretpassworkd')"""
+               (' juan.carlos.wow.95@gmail.com', 'Juan Carlos Serrano', 'secretpassworkd')"""
         self.execute_query( query )
 
 
