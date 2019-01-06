@@ -5,11 +5,12 @@ sys.path.insert(0, parent_dir)
 
 from auxiliary.VariableDeclaration import *
 
+
 """
 This method will return the favicon of the website
 """
-@app.route('/favicon.ico')
-def favicon():
+@app.route('/favicon.ico', , methods=['GET'])
+def GET_favicon():
 
     return send_from_directory(IMG_DIR,
                                'favicon.ico',
@@ -20,7 +21,7 @@ def favicon():
 This method will return the logo of the main page of the website
 """
 @app.route('/img/logo.jpg', methods=['GET'])
-def get_logo():
+def GET_logo():
 
     return send_from_directory(IMG_DIR,
                                'logo.jpg')
@@ -30,7 +31,7 @@ def get_logo():
 This method will return the CSS of the site
 """
 @app.route('/css/main.css', methods=['GET'])
-def get_css():
+def GET_css():
 
     return send_from_directory(CSS_DIR,
                                'main.css')
@@ -40,7 +41,7 @@ def get_css():
 This method will return the main page
 """
 @app.route('/', methods=['GET'])
-def get_html_index():
+def GET_html_index():
 
     return send_from_directory(HTML_DIR,
                                'index.html')
@@ -50,11 +51,12 @@ def get_html_index():
 This method will return any asked webpage, or the 404 webpage if not found
 """
 @app.route('/<string:route>', methods=['GET'])
-def get_html_page(route):
+def GET_html_page(route):
 
     html_file_name =  route + '.html'
+    html_file_route =  os.path.join(HTML_DIR, html_file_name)
 
-    if os.path.isfile( os.path.join(HTML_DIR, html_file_name)):
+    if os.path.isfile( html_file_route ):
         return send_from_directory(HTML_DIR,
                                    html_file_name)
     else:
@@ -66,7 +68,7 @@ def get_html_page(route):
 This method overrides the default handler for the HTTP error 404 (not found)
 """
 @app.errorhandler(404)
-def not_found(error=None):
+def HANDLE_not_found(error=None):
 
     return send_from_directory(HTML_DIR,
                                '404.html')
@@ -76,7 +78,7 @@ def not_found(error=None):
 This method overrides the default handler for the HTTP error 405 (operationnot allowed)
 """
 @app.errorhandler(405)
-def not_allowed(error=None):
+def HANDLE_not_allowed(error=None):
 
     message = {}
     message['status'] = '405'
@@ -92,7 +94,7 @@ def not_allowed(error=None):
 This method will return some information about the server for the Android app
 """
 @app.route('/rest/status', methods=['GET'])
-def get_status():
+def GET_status():
 
     response = Response(json.dumps( server_info, indent=4 ),
                         status=200,
