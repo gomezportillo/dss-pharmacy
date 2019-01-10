@@ -21,6 +21,11 @@ If the server is down or you choose to deploy the project locally,
 
 Bear in mind that you have to change the variable `debug` on each HTML page from `false` to `true`.
 
+## Showcase video
+
+* The web server - [YouTube](https://www.youtube.com/watch?v=34ATytwrbNA&t=65s)
+* The Android app + [YouTube](https://www.youtube.com/watch?v=LKRbPSl7Czg)
+
 ## Documentation
 
 Basically, the server will return JSON messages under HTTP petitions on the `/rest/$(resource)` route, being those resources.
