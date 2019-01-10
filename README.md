@@ -24,7 +24,7 @@ Bear in mind that you have to change the variable `debug` on each HTML page from
 ## Showcase video
 
 * The web server - [YouTube](https://www.youtube.com/watch?v=34ATytwrbNA&t=65s)
-* The Android app + [YouTube](https://www.youtube.com/watch?v=LKRbPSl7Czg)
+* The Android app - [YouTube](https://www.youtube.com/watch?v=LKRbPSl7Czg)
 
 ## Documentation
 
