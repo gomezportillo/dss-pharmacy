@@ -105,17 +105,8 @@ $( document ).ready(function()
 
 });
 
-var debug = false;
-if ( debug )
-{
-  var CART_REST_URL = "http://localhost/rest/cart";
-  var ORDERS_REST_URL = "http://localhost/rest/orders";
-}
-else
-{
-  var CART_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/cart";
-  var ORDERS_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/orders";
-}
+var CART_REST_URL = "/rest/cart";
+var ORDERS_REST_URL = "/rest/orders";
 
 function GET_cart()
 {

@@ -110,15 +110,7 @@ $( document ).ready(function()
   GET_users();
 });
 
-var debug = false;
-if ( debug )
-{
-  var USERS_REST_URL = "http://localhost/rest/users";
-}
-else
-{
-  var USERS_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/users";
-}
+var USERS_REST_URL = "/rest/users";
 
 function GET_users()
 {

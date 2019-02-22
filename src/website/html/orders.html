@@ -80,15 +80,7 @@ $( document ).ready(function()
   GET_orders();
 });
 
-var debug = false;
-if ( debug )
-{
-  var ORDERS_REST_URL = "http://localhost/rest/orders";
-}
-else
-{
-  var ORDERS_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/orders";
-}
+var ORDERS_REST_URL = "/rest/orders";
 
 function GET_orders()
 {

@@ -82,15 +82,7 @@ $( document ).ready(function()
   GET_server_status();
 });
 
-var debug = false;
-if ( debug )
-{
-  var STATUS_REST_URL = "http://localhost:/rest/status";
-}
-else
-{
-  var STATUS_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/status";
-}
+var STATUS_REST_URL = "/rest/status";
 
 function GET_server_status()
 {

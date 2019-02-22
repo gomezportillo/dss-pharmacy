@@ -122,19 +122,9 @@ $( document ).ready(function()
   GET_pharmacies();
 });
 
-var debug = false;
-if ( debug )
-{
-  var PRODUCT_REST_URL = "http://localhost/rest/products";
-  var CART_REST_URL = "http://localhost/rest/cart";
-  var PHARMACIES_REST_URL = "http://localhost/rest/pharmacies";
-}
-else
-{
-  var PRODUCT_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/products";
-  var CART_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/cart";
-  var PHARMACIES_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/pharmacies";
-}
+var PRODUCT_REST_URL = "/rest/products";
+var CART_REST_URL = "/rest/cart";
+var PHARMACIES_REST_URL = "/rest/pharmacies";
 
 // REF. https://api.jquery.com/jquery.get/
 function GET_products()

@@ -118,16 +118,8 @@
     load_pharmacies_and_create_markers();
   });
 
-  var debug = false;
-  if ( debug )
-  {
-    var PHARMACIES_REST_URL = "http://localhost/rest/pharmacies";
-  }
-  else
-  {
-    var PHARMACIES_REST_URL = "https://dss-pharmacy.herokuapp.com/rest/pharmacies";
-  }
-
+  var PHARMACIES_REST_URL = "/rest/pharmacies";
+  
   function load_pharmacies_and_create_markers()
   {
     $.ajax({
